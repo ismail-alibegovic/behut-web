@@ -1,6 +1,7 @@
 import { ArrowDown, ArrowUpRight, Camera, MapPin } from 'lucide-react'
 import { images, instagramPosts, siteConfig } from '@/data/site-config'
 import { SiteImage } from './site-image'
+import { InstagramEmbed } from './instagram-embed'
 
 export function Hero() {
   return <section className="hero wrap">
@@ -29,7 +30,7 @@ export function InstagramSection() {
         const url = `https://www.instagram.com/${post.kind}/${post.id}/`
         const no = String(i + 1).padStart(2, '0')
         return <article className="ig-post" key={post.id}>
-          <div className="ig-frame"><iframe src={`${url}embed/`} title={`Behut na Instagramu — objava ${no}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; clipboard-write" allowFullScreen /></div>
+          <div className="ig-frame"><InstagramEmbed url={url} title={`Behut na Instagramu — objava ${no}`} /></div>
           <div className="ig-caption"><span>BEHUT / {no}</span><a href={url} target="_blank" rel="noreferrer">Otvori objavu <ArrowUpRight size={13} /></a></div>
         </article>
       })}
