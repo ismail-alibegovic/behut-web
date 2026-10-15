@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUpRight, Camera, MapPin } from 'lucide-react'
-import { images, siteConfig } from '@/data/site-config'
+import { images, instagramPosts, siteConfig } from '@/data/site-config'
 import { SiteImage } from './site-image'
 
 export function Hero() {
@@ -22,7 +22,20 @@ export function Story() {
 }
 
 export function InstagramSection() {
-  return <section className="instagram-section"><div className="wrap instagram-heading"><span className="eyebrow">TRENUTKE NE BROJIMO. ČUVAMO IH.</span><a href={siteConfig.instagram} target="_blank" rel="noreferrer"><h2>@behut_cafe</h2><ArrowUpRight /></a></div><div className="social-collage"><a className="social-photo" href={siteConfig.instagram} target="_blank" rel="noreferrer" aria-label="Fotografije Behuta na Instagramu"><SiteImage image={images.facade} /></a><a className="social-note" href={siteConfig.instagram} target="_blank" rel="noreferrer"><Camera size={30} /><span>Malo offline.<br /><em>Malo na feedu.</em></span><span className="text-link">Prati naš svakodnevni merak <ArrowUpRight size={18} /></span></a><a className="social-photo social-detail" href={siteConfig.instagram} target="_blank" rel="noreferrer" aria-label="Detalji Behuta na Instagramu"><SiteImage image={images.entrance} /></a></div></section>
+  return <section id="instagram" className="instagram-section">
+    <div className="wrap instagram-heading"><span className="eyebrow">TRENUTKE NE BROJIMO. ČUVAMO IH.</span><a href={siteConfig.instagram} target="_blank" rel="noreferrer"><h2>@behut_cafe</h2><ArrowUpRight /></a><p className="instagram-lead">Stvarni kadrovi, direktno sa našeg profila. <em>Bez filtera za merak.</em></p></div>
+    <div className="ig-feed" aria-label="Objave sa Instagram profila @behut_cafe">
+      {instagramPosts.map((post, i) => {
+        const url = `https://www.instagram.com/${post.kind}/${post.id}/`
+        const no = String(i + 1).padStart(2, '0')
+        return <article className="ig-post" key={post.id}>
+          <div className="ig-frame"><iframe src={`${url}embed/`} title={`Behut na Instagramu — objava ${no}`} loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; clipboard-write" allowFullScreen /></div>
+          <div className="ig-caption"><span>BEHUT / {no}</span><a href={url} target="_blank" rel="noreferrer">Otvori objavu <ArrowUpRight size={13} /></a></div>
+        </article>
+      })}
+    </div>
+    <div className="wrap ig-follow"><span className="ig-swipe" aria-hidden="true">Prevuci →</span><span>Još kadrova sa Kovača, svaki dan.</span><a className="pill" href={siteConfig.instagram} target="_blank" rel="noreferrer"><Camera size={17} /> Prati @behut_cafe <ArrowUpRight size={17} /></a></div>
+  </section>
 }
 
 export function LocationAndFooter() {

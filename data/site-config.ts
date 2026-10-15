@@ -24,6 +24,14 @@ export const siteConfig = {
   gallery: [images.guitar, images.city, images.interior, images.facade, images.entrance, images.terrace],
 }
 
+export type InstagramPost = { id: string; kind: 'reel' | 'p' }
+// Stvarne objave sa @behut_cafe — dodaj/zamijeni ID iz linka objave (instagram.com/reel/<ID>/)
+export const instagramPosts: InstagramPost[] = [
+  { id: 'DNQQMOXt8Bv', kind: 'reel' },
+  { id: 'DPJ1vhWjfEc', kind: 'reel' },
+  { id: 'DTGLBZBDZHu', kind: 'reel' },
+]
+
 export type MenuItem = { name: { bs: string; en?: string }; price: number | null }
 export const menuCategories: { name: string; items: MenuItem[] }[] = [
   { name: 'Topli napici', items: [{ name: { bs: 'Bosanska kafa', en: 'Bosnian coffee' }, price: 5 }, { name: { bs: 'Behut specijalni čaj' }, price: null }, { name: { bs: 'Salep' }, price: null }] },
