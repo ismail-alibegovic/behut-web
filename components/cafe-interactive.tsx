@@ -4,12 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, ArrowRight, ArrowUpRight, Menu, X, Plus, MapPin } from 'lucide-react'
 import { images, menuCategories, siteConfig } from '@/data/site-config'
 import { SiteImage } from './site-image'
-import {
-  CardBotanicalWatermark,
-  CoffeeBeansCluster,
-  CoffeeBranchSilhouette,
-  RoseBloomSilhouette,
-} from './cafe-silhouettes'
 
 const links = [
   { href: '#prica', label: 'Naša priča', num: '01' },
@@ -92,7 +86,6 @@ export function Header() {
               aria-label="Mobilna navigacija"
               onClick={e => e.stopPropagation()}
             >
-              <RoseBloomSilhouette className="mobile-nav-watermark" />
               <div className="mobile-nav-header">
                 <span className="eyebrow">BEHUT SARAJEVO · KOVAČI 20</span>
                 <button
@@ -146,19 +139,16 @@ const ritualMetadata = [
     subtitle: 'TRADICIONALNA DŽEZVA & FILDŽAN',
     description:
       'Nije samo kafa — to je vrijeme za sebe, bogat kajmak u fildžanu, miris svježe pržene kafe i razgovori koji na Kovačima traju satima.',
-    watermark: 'coffee' as const,
   },
   {
     subtitle: 'SVJEŽI LIMUN & LISTIĆI DOMAĆE MENTE',
     description:
       'Spoj svježe cijeđenog limuna i mirisne mente, rashlađen do savršenstva za sunčana popodneva i predah na našoj terasi.',
-    watermark: 'mint' as const,
   },
   {
     subtitle: 'KUĆNA VOĆNA & BILJNA INFUZIJA',
     description:
       'Naš potpisni ledeni čaj s pažljivo biranim biljnim i citrusnim notama — još jedan razlog da ostaneš malo duže.',
-    watermark: 'rose' as const,
   },
 ]
 
@@ -175,10 +165,6 @@ export function FeaturedDrinks() {
 
   return (
     <section id="ritual" className="featured">
-      {/* Subtle Botanical Silhouettes on the Dark Forest Green Stage */}
-      <CoffeeBranchSilhouette className="bg-silhouette featured-coffee-silhouette" />
-      <RoseBloomSilhouette className="bg-silhouette featured-rose-silhouette" flip />
-
       <div className="wrap">
         <div className="featured-top">
           <span className="eyebrow">01 / NAŠI MALI RITUALI</span>
@@ -215,13 +201,12 @@ export function FeaturedDrinks() {
 
           <div className="drink-asset" key={`photo-${selected}`}>
             {photo ? (
-              <SiteImage image={photo} />
+              <>
+                <SiteImage image={photo} priority />
+                <span className="drink-photo-badge">0{selected + 1} · {drink.name.bs}</span>
+              </>
             ) : (
               <div className="asset-slot">
-                <CardBotanicalWatermark
-                  variant={meta.watermark}
-                  className="asset-slot-watermark"
-                />
                 <span className="asset-slot-eyebrow">BEHUT · SARAJEVO</span>
                 <strong className="asset-number">0{selected + 1}</strong>
                 <span className="asset-slot-name">{drink.name.bs}</span>
@@ -272,22 +257,6 @@ const menuItemSubtitles: Record<string, string> = {
   Hurmašica: 'Tradicionalni zaliveni kolač koji prati pravu bosansku kafu.',
 }
 
-function getCardWatermarkVariant(
-  categoryName: string,
-  itemName: string
-): 'coffee' | 'rose' | 'mint' | 'sweet' {
-  if (itemName === 'Ruža' || categoryName === 'Tradicionalni sokovi') return 'rose'
-  if (
-    itemName === 'Limunana' ||
-    categoryName === 'Prirodni napici' ||
-    categoryName === 'Behut Specials'
-  ) {
-    return 'mint'
-  }
-  if (categoryName === 'Tradicionalni kolači') return 'sweet'
-  return 'coffee'
-}
-
 export function CafeMenu() {
   const [selected, setSelected] = useState(0)
   const [expanded, setExpanded] = useState<string | null>(null)
@@ -295,10 +264,6 @@ export function CafeMenu() {
 
   return (
     <section id="meni" className="menu-section">
-      {/* Subtle Background Silhouettes of Coffee Beans & Rose Flowers */}
-      <CoffeeBeansCluster className="bg-silhouette menu-beans-silhouette" />
-      <RoseBloomSilhouette className="bg-silhouette menu-rose-silhouette" />
-
       <div className="wrap">
         <div className="menu-heading">
           <div>
@@ -349,7 +314,6 @@ export function CafeMenu() {
               const subtitle =
                 menuItemSubtitles[item.name.bs] ??
                 'Pripremljeno s pažnjom prema autentičnoj sarajevskoj recepturi.'
-              const watermarkVariant = getCardWatermarkVariant(category.name, item.name.bs)
 
               return (
                 <article
@@ -364,13 +328,12 @@ export function CafeMenu() {
                   >
                     <div className="product-visual">
                       {photo ? (
-                        <SiteImage image={photo} />
+                        <>
+                          <SiteImage image={photo} priority />
+                          <span className="product-photo-number">0{index + 1}</span>
+                        </>
                       ) : (
                         <div className="product-visual-inner">
-                          <CardBotanicalWatermark
-                            variant={watermarkVariant}
-                            className="product-card-watermark"
-                          />
                           <span className="product-number">0{index + 1}</span>
                           <span className="product-word">{shortWord}</span>
                           <span className="product-slot-label">
@@ -418,7 +381,6 @@ export function CafeMenu() {
             })
           ) : (
             <div className="menu-empty">
-              <RoseBloomSilhouette className="menu-empty-watermark" />
               <span className="eyebrow">{category.name.toUpperCase()}</span>
               <h3>Sezonska ponuda u našem caféu</h3>
               <p>
@@ -448,9 +410,6 @@ export function Gallery() {
 
   return (
     <section id="galerija" className="gallery-section section-space">
-      <CoffeeBranchSilhouette className="bg-silhouette gallery-coffee-silhouette" flip />
-      <RoseBloomSilhouette className="bg-silhouette gallery-rose-silhouette" />
-
       <div className="wrap">
         <div className="gallery-heading">
           <div>

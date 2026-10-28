@@ -1,20 +1,10 @@
 import { ArrowDown, ArrowUpRight, Camera, MapPin } from 'lucide-react'
 import { images, siteConfig } from '@/data/site-config'
 import { SiteImage } from './site-image'
-import {
-  CoffeeBeansCluster,
-  CoffeeBranchSilhouette,
-  RoseBloomSilhouette,
-} from './cafe-silhouettes'
 
 export function Hero() {
   return (
     <section className="hero wrap">
-      {/* Subtle Botanical & Coffee Silhouettes in the Hero Canvas */}
-      <RoseBloomSilhouette className="bg-silhouette hero-rose-silhouette" />
-      <CoffeeBranchSilhouette className="bg-silhouette hero-branch-silhouette" flip />
-      <CoffeeBeansCluster className="bg-silhouette hero-beans-silhouette" />
-
       <div className="hero-meta">
         <span className="hero-meta-left">
           <span className="meta-dot" aria-hidden="true" />
@@ -87,10 +77,6 @@ export function Hero() {
 export function Story() {
   return (
     <section id="prica" className="story-section">
-      {/* Subtle Rose & Coffee Branch Silhouettes */}
-      <RoseBloomSilhouette className="bg-silhouette story-rose-silhouette" flip />
-      <CoffeeBranchSilhouette className="bg-silhouette story-coffee-silhouette" />
-
       <div className="wrap">
         <div className="story-intro">
           <span className="eyebrow">02 / NAŠA PRIČA</span>
@@ -153,9 +139,6 @@ export function Story() {
 export function InstagramSection() {
   return (
     <section className="instagram-section">
-      <CoffeeBeansCluster className="bg-silhouette insta-beans-silhouette" />
-      <RoseBloomSilhouette className="bg-silhouette insta-rose-silhouette" />
-
       <div className="wrap instagram-heading">
         <span className="eyebrow">05 / TRENUTKE NE BROJIMO. ČUVAMO IH.</span>
         <a href={siteConfig.instagram} target="_blank" rel="noreferrer">
@@ -178,7 +161,6 @@ export function InstagramSection() {
         </a>
 
         <a className="social-note" href={siteConfig.instagram} target="_blank" rel="noreferrer">
-          <RoseBloomSilhouette className="social-note-watermark" />
           <div className="social-note-top">
             <div className="social-camera-badge">
               <Camera size={22} />
@@ -255,9 +237,6 @@ export function LocationAndFooter() {
       </section>
 
       <footer className="site-footer">
-        <CoffeeBranchSilhouette className="bg-silhouette footer-coffee-silhouette" />
-        <RoseBloomSilhouette className="bg-silhouette footer-rose-silhouette" flip />
-
         <div className="wrap footer-top">
           <div className="footer-brand">
             <a href="#" className="logo-window footer-logo" aria-label="Behut Sarajevo — na vrh">
