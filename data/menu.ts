@@ -1,82 +1,128 @@
+import type { L, Locale } from '@/lib/i18n'
 import type { SiteImage } from './site-config'
 
-/** price je null dok cijena nije potvrđena; tada se na sajtu ne prikazuje. */
+/**
+ * Behut meni prema "Kula.pdf" (Canva, avgust 2026). Cijene su u KM.
+ * Fotografiju piću dodaješ tako da staviš sliku u public/images/menu/<id>.webp
+ * i stavci upišeš `photo: { bs: '…', en: '…' }` (opis slike za čitače ekrana).
+ */
 export type MenuItem = {
   id: string
-  name: { bs: string; en?: string }
-  price: number | null
-  image?: SiteImage
-  description?: string
+  name: L
+  price: number
+  description?: L
+  /** Alt tekst fotografije public/images/menu/<id>.webp; bez nje se prikazuje ikona. */
+  photo?: L
   /** Ikona kad nema fotografije. */
   icon?: 'cup' | 'glass' | 'pastry'
 }
-export type MenuCategory = { id: string; name: string; items: MenuItem[] }
+export type MenuCategory = {
+  id: string
+  name: L
+  /** Kategorije koje se ne prikazuju u meniju na početnoj (ali su u punom meniju za QR). */
+  homeHidden?: boolean
+  items: MenuItem[]
+}
 
-const photo = (file: string, alt: string): SiteImage => ({ src: `/images/menu/${file}.webp`, alt })
+const same = (text: string): L => ({ bs: text, en: text })
 
-const categories: MenuCategory[] = [
+export const menuCategories: MenuCategory[] = [
   {
-    id: 'topli',
-    name: 'Topli napici',
+    id: 'topli-napici',
+    name: { bs: 'Topli napici', en: 'Hot drinks' },
     items: [
-      { id: 'bosanska-kafa', name: { bs: 'Bosanska kafa', en: 'Bosnian coffee' }, price: 5, icon: 'cup', description: 'Kuhana u džezvi, servirana polako. Kafa za sjedenje, ne za usput.' },
-      { id: 'espresso', name: { bs: 'Espresso' }, price: null, image: photo('espresso', 'Espresso u bijeloj šoljici s cvjetnim tanjirićem'), description: 'Kratak, gust i aromatičan. Za one koji znaju šta hoće.' },
-      { id: 'espresso-doppio', name: { bs: 'Espresso doppio' }, price: null, image: photo('espresso-doppio', 'Dupli espresso s gustom kremom u bijeloj šoljici'), description: 'Duplo espressa, duplo razloga da ostaneš.' },
-      { id: 'mali-makijato', name: { bs: 'Mali makijato' }, price: null, image: photo('mali-makijato', 'Mali makijato s mliječnom pjenom u maloj šoljici'), description: 'Espresso i kapljica mliječne pjene. Mali, ali svoj.' },
-      { id: 'veliki-makijato', name: { bs: 'Veliki makijato' }, price: null, image: photo('veliki-makijato', 'Veliki makijato s latte art listom u bijeloj šoljici'), description: 'Više mlijeka, više mekoće, isti espresso u srcu.' },
-      { id: 'kapucino', name: { bs: 'Kapućino', en: 'Cappuccino' }, price: null, image: photo('kapucino', 'Kapućino s latte art listom na bijelom tanjiriću'), description: 'Espresso, toplo mlijeko i svilenkasta pjena.' },
-      { id: 'flat-white', name: { bs: 'Flat white' }, price: null, image: photo('flat-white', 'Flat white s latte art crtežom u bijeloj šoljici'), description: 'Jači od kapućina, mekši od espressa.' },
-      { id: 'topla-cokolada', name: { bs: 'Topla čokolada', en: 'Hot chocolate' }, price: null, image: photo('topla-cokolada', 'Topla čokolada sa šlagom i komadićima čokolade u staklenoj šolji'), description: 'Gusta, topla i sa šlagom. Za hladnije sarajevske dane.' },
-      { id: 'salep', name: { bs: 'Salep' }, price: null, image: photo('salep', 'Salep posut cimetom u staklenoj šolji'), description: 'Topli mliječni napitak posut cimetom.' },
-      { id: 'behut-specijalni-caj', name: { bs: 'Behut specijalni čaj' }, price: null, icon: 'cup', description: 'Behutov specijalni čaj, za spori razgovor.' },
+      { id: 'bosanska-kafa', name: { bs: 'Bosanska kafa', en: 'Bosnian coffee' }, price: 5, icon: 'cup', description: { bs: 'Kuhana u džezvi, servirana polako. Kafa za sjedenje, ne za usput.', en: 'Brewed in a džezva and served slowly. Coffee for sitting, not for the road.' } },
+      { id: 'espresso', name: same('Espresso'), price: 3, photo: { bs: 'Espresso u bijeloj šoljici s cvjetnim tanjirićem', en: 'Espresso in a white cup on a floral saucer' }, description: { bs: 'Kratak, gust i aromatičan.', en: 'Short, dense and aromatic.' } },
+      { id: 'espresso-doppio', name: same('Espresso doppio'), price: 5, photo: { bs: 'Dupli espresso s gustom kremom u bijeloj šoljici', en: 'Double espresso with thick crema in a white cup' }, description: { bs: 'Duplo espressa, duplo razloga da ostaneš.', en: 'Double the espresso, double the reason to stay.' } },
+      { id: 'extra-espresso-shot', name: { bs: 'Dodatni espresso shot', en: 'Extra espresso shot' }, price: 2, icon: 'cup' },
+      { id: 'veliki-makijato', name: same('Macchiato'), price: 4, photo: { bs: 'Makijato s latte art listom u bijeloj šoljici', en: 'Macchiato with latte art in a white cup' }, description: { bs: 'Više mlijeka, više mekoće, isti espresso u srcu.', en: 'More milk, more softness, the same espresso at heart.' } },
+      { id: 'mali-makijato', name: { bs: 'Mali macchiato', en: 'Piccolo macchiato' }, price: 3, photo: { bs: 'Mali makijato s mliječnom pjenom u maloj šoljici', en: 'Piccolo macchiato with milk foam in a small cup' }, description: { bs: 'Espresso i kapljica mliječne pjene.', en: 'Espresso with a drop of milk foam.' } },
+      { id: 'flat-white', name: same('Flat white'), price: 5, photo: { bs: 'Flat white s latte art crtežom u bijeloj šoljici', en: 'Flat white with latte art in a white cup' }, description: { bs: 'Jači od kapućina, mekši od espressa.', en: 'Stronger than a cappuccino, softer than an espresso.' } },
+      { id: 'americano', name: same('Americano'), price: 3.5, icon: 'cup' },
+      { id: 'kapucino', name: same('Cappuccino'), price: 4, photo: { bs: 'Kapućino s latte art listom na bijelom tanjiriću', en: 'Cappuccino with latte art on a white saucer' }, description: { bs: 'Espresso, toplo mlijeko i svilenkasta pjena.', en: 'Espresso, warm milk and silky foam.' } },
+      { id: 'latte-macchiato', name: same('Latte macchiato'), price: 4.5, icon: 'glass' },
+      { id: 'caffe-mocha', name: same('Caffe mocha'), price: 5, icon: 'cup' },
+      { id: 'bezkofeinska-kafa', name: { bs: 'Bezkofeinska kafa', en: 'Decaf coffee' }, price: 5, icon: 'cup' },
+      { id: 'topla-cokolada', name: { bs: 'Topla čokolada', en: 'Hot chocolate' }, price: 5, photo: { bs: 'Topla čokolada sa šlagom i komadićima čokolade u staklenoj šolji', en: 'Hot chocolate with whipped cream and chocolate pieces in a glass mug' }, description: { bs: 'Gusta, topla i sa šlagom.', en: 'Thick, warm and topped with whipped cream.' } },
+      { id: 'nescafe', name: same('Nescafe'), price: 4, icon: 'cup', description: { bs: 'Vanilija, čokolada', en: 'Vanilla, chocolate' } },
+      { id: 'premium-caj', name: { bs: 'Premium čaj', en: 'Herbal premium tea' }, price: 4, icon: 'cup' },
+      { id: 'turski-caj', name: { bs: 'Turski čaj', en: 'Turkish tea' }, price: 3.5, icon: 'cup' },
     ],
   },
   {
     id: 'ledene-kafe',
-    name: 'Ledene kafe',
+    name: { bs: 'Ledene kafe', en: 'Iced coffee' },
     items: [
-      { id: 'ledeni-espresso', name: { bs: 'Ledeni espresso', en: 'Iced espresso' }, price: null, image: photo('ledeni-espresso', 'Ledeni espresso s kockama leda u staklenoj čaši'), description: 'Espresso preko leda. Kratko osvježenje.' },
-      { id: 'ledeni-americano', name: { bs: 'Ledeni americano', en: 'Iced americano' }, price: null, image: photo('ledeni-americano', 'Ledeni americano s ledom u staklenoj čaši'), description: 'Espresso, hladna voda i puno leda.' },
-      { id: 'ledeni-latte-karamel', name: { bs: 'Ledeni latte s karamelom', en: 'Caramel iced latte' }, price: null, image: photo('ledeni-latte-karamel', 'Ledeni latte s karamelom i ledom u visokoj čaši sa slamkom'), description: 'Mlijeko, espresso i karamel preko leda.' },
-      { id: 'ledena-moka', name: { bs: 'Ledena moka', en: 'Iced mocha' }, price: null, image: photo('ledena-moka', 'Ledena moka s čokoladnim prelivom u visokoj čaši sa slamkom'), description: 'Espresso i čokolada, ohlađeni za terasu.' },
+      { id: 'ledeni-espresso', name: { bs: 'Ledeni espresso', en: 'Iced espresso' }, price: 5, photo: { bs: 'Ledeni espresso s kockama leda u staklenoj čaši', en: 'Iced espresso with ice cubes in a glass' }, description: { bs: 'Dupli espresso preko leda, jednostavno i snažno.', en: 'Double espresso over ice, simple and strong.' } },
+      { id: 'ledeni-americano', name: { bs: 'Ledeni americano', en: 'Iced americano' }, price: 5, photo: { bs: 'Ledeni americano s ledom u staklenoj čaši', en: 'Iced americano with ice in a glass' }, description: { bs: 'Osvježavajući espresso s hladnom vodom i ledom.', en: 'Refreshing espresso with cold water and ice.' } },
+      { id: 'ledeni-latte', name: { bs: 'Ledeni latte', en: 'Iced latte' }, price: 6, icon: 'glass', description: { bs: 'Espresso + hladno mlijeko + led.', en: 'Espresso + cold milk + ice.' } },
+      { id: 'ledeni-latte-karamel', name: { bs: 'Ledeni caramel latte', en: 'Iced caramel latte' }, price: 7, photo: { bs: 'Ledeni latte s karamelom i ledom u visokoj čaši sa slamkom', en: 'Iced caramel latte with ice in a tall glass with a straw' }, description: { bs: 'Hladan latte sa karamel sirupom i šlagom.', en: 'Chilled latte with caramel syrup and whipped cream.' } },
+      { id: 'ledena-moka', name: { bs: 'Ledena mocha', en: 'Iced mocha' }, price: 7, photo: { bs: 'Ledena moka s čokoladnim prelivom u visokoj čaši sa slamkom', en: 'Iced mocha with chocolate drizzle in a tall glass with a straw' }, description: { bs: 'Čokolada + espresso + mlijeko + led = desert u čaši.', en: 'Chocolate + espresso + milk + ice, a dessert in a cup.' } },
+    ],
+  },
+  {
+    id: 'behut-specials',
+    name: same('Behut specials'),
+    items: [
+      { id: 'behut-specijalni-caj', name: { bs: 'Behut speciality čaj', en: 'Behut speciality tea' }, price: 6, icon: 'cup', description: { bs: 'Pažljivo odabrano bilje za naš specijalitet, BEHUT čaj.', en: 'Finely selected herbs for our BEHUT speciality tea.' } },
+      { id: 'behut-ledeni-caj', name: { bs: 'Behut ledeni čaj', en: 'Behut ice tea' }, price: 7, icon: 'glass', description: { bs: 'Čaj koji mijenja boju, od cvijeta plave klitorije, mente i limuna – živopisan, osvježavajuć i čaroban.', en: 'Colour-changing tea with butterfly pea flower, mint and lemon. Vibrant, refreshing and magical.' } },
+      { id: 'salep', name: same('Salep'), price: 5, photo: { bs: 'Salep posut cimetom u staklenoj šolji', en: 'Salep dusted with cinnamon in a glass mug' }, description: { bs: 'Topao napitak od korijena orhideje, kremast i bogat tradicijom.', en: 'Heartwarming drink from orchid tubers, creamy and full of tradition.' } },
+      { id: 'pink-limunada', name: { bs: 'Pink limunada', en: 'Pink lemonade' }, price: 5, icon: 'glass', description: { bs: 'Voćna limunada nježno roze boje, lagana, osvježavajuća i posebna.', en: 'Fruity lemonade with a soft pink hue – light, refreshing and unique.' } },
+      { id: 'limunana', name: same('Limunana'), price: 5, icon: 'glass', description: { bs: 'Specijalitet kuće! Limunada s dodatkom mente, pravo osvježenje za vas.', en: 'Behut speciality! Classic lemonade with a minty twist, the ultimate refreshment.' } },
     ],
   },
   {
     id: 'tradicionalni-sokovi',
-    name: 'Tradicionalni sokovi',
+    name: { bs: 'Tradicionalni sokovi', en: 'Traditional juices' },
     items: [
-      { id: 'ruza', name: { bs: 'Ruža' }, price: null, image: photo('ruza', 'Sok od ruže s laticama i ledom u visokoj čaši'), description: 'Sok od ruže, s laticama i ledom.' },
-      { id: 'menta', name: { bs: 'Menta' }, price: null, image: photo('menta', 'Osvježavajući sok od mente s ledom u visokoj čaši'), description: 'Hladna, svježa i zelena kao naša vrata.' },
-      { id: 'zova', name: { bs: 'Zova' }, price: null, image: photo('zova', 'Sok od zove s ledom u visokoj čaši sa slamkom'), description: 'Cvjetni, osvježavajući sok od zove.' },
-      { id: 'serbe', name: { bs: 'Šerbe' }, price: null, icon: 'glass', description: 'Tradicionalno šerbe, slatko i hladno.' },
+      { id: 'ruza', name: { bs: 'Ruža', en: 'Rose' }, price: 4, photo: { bs: 'Sok od ruže s laticama i ledom u visokoj čaši', en: 'Rose juice with petals and ice in a tall glass' }, description: { bs: 'Sok od ruže, s laticama i ledom.', en: 'Rose juice with petals and ice.' } },
+      { id: 'menta', name: { bs: 'Menta', en: 'Mint' }, price: 4, photo: { bs: 'Osvježavajući sok od mente s ledom u visokoj čaši', en: 'Refreshing mint juice with ice in a tall glass' }, description: { bs: 'Hladna, svježa i zelena kao naša vrata.', en: 'Cold, fresh and as green as our door.' } },
+      { id: 'zova', name: { bs: 'Zova', en: 'Elder flower' }, price: 4, photo: { bs: 'Sok od zove s ledom u visokoj čaši sa slamkom', en: 'Elder flower juice with ice in a tall glass with a straw' }, description: { bs: 'Cvjetni, osvježavajući sok od zove.', en: 'Floral, refreshing elder flower juice.' } },
+      { id: 'serbe', name: { bs: 'Šerbe', en: 'Sherbe' }, price: 4, icon: 'glass', description: { bs: 'Tradicionalno šerbe, slatko i hladno.', en: 'Traditional sherbet drink, sweet and cold.' } },
     ],
   },
   {
-    id: 'prirodni',
-    name: 'Prirodni napici',
-    items: [{ id: 'limunada', name: { bs: 'Limunada' }, price: null, icon: 'glass', description: 'Svjež limun za vrući dan.' }],
-  },
-  {
-    id: 'specials',
-    name: 'Behut Specials',
-    items: [{ id: 'behut-ledeni-caj', name: { bs: 'Behut ledeni čaj' }, price: null, icon: 'glass', description: 'Behutov ledeni čaj za terasu.' }],
-  },
-  {
-    id: 'kolaci',
-    name: 'Tradicionalni kolači',
+    id: 'prirodni-napici',
+    name: { bs: 'Prirodni napici', en: 'Natural drinks' },
     items: [
-      { id: 'baklava', name: { bs: 'Baklava' }, price: null, icon: 'pastry', description: 'Uz kafu, kako to već ide.' },
-      { id: 'hurmasica', name: { bs: 'Hurmašica' }, price: null, icon: 'pastry', description: 'Tradicionalni kolač natopljen šerbetom.' },
+      { id: 'cijedena-narandza', name: { bs: 'Cijeđena narandža', en: 'Fresh orange' }, price: 7, icon: 'glass' },
+      { id: 'limunada', name: { bs: 'Limunada', en: 'Lemonade' }, price: 4, icon: 'glass' },
+      { id: 'detox-mix', name: same('Detox mix'), price: 8, icon: 'glass' },
+    ],
+  },
+  {
+    id: 'tradicionalni-kolaci',
+    name: { bs: 'Tradicionalni kolači', en: 'Traditional cakes' },
+    items: [
+      { id: 'baklava', name: same('Baklava'), price: 5, icon: 'pastry' },
+      { id: 'hurmasica', name: same('Hurmašica'), price: 5, icon: 'pastry' },
+    ],
+  },
+  {
+    id: 'hladni-napici',
+    name: { bs: 'Hladni napici', en: 'Cold drinks' },
+    homeHidden: true,
+    items: [
+      { id: 'gazirani-sokovi', name: { bs: 'Gazirani sokovi', en: 'Sodas' }, price: 4.5, icon: 'glass', description: same('Cola, Sprite, Ski Mango-Orange, Ski Orange') },
+      { id: 'mineralna-voda', name: { bs: 'Mineralna voda', en: 'Sparkling water' }, price: 3, icon: 'glass' },
+      { id: 'prirodna-voda', name: { bs: 'Prirodna voda', en: 'Still water' }, price: 2.5, icon: 'glass' },
+      { id: 'cedevita', name: same('Cedevita'), price: 4, icon: 'glass', description: { bs: 'Narandža, limun', en: 'Orange, lemon' } },
+      { id: 'ledeni-caj', name: { bs: 'Ledeni čaj', en: 'Ice tea' }, price: 4, icon: 'glass', description: { bs: 'Malina, breskva, kamilica-mango', en: 'Peach, cranberry, chamomile-mango' } },
+      { id: 'cockta', name: same('Cockta'), price: 4.5, icon: 'glass' },
+      { id: 'orangina', name: same('Orangina'), price: 5, icon: 'glass' },
+      { id: 'kuca-prirode', name: { bs: 'Kuća prirode sokovi', en: 'Kuća prirode juices' }, price: 5, icon: 'glass', description: { bs: 'Jagoda, narandža, jabuka, breskva, ananas', en: 'Strawberry, orange, apple, peach, pineapple' } },
     ],
   },
 ]
-export const menuCategories = categories.filter(category => category.items.length > 0)
 
-export type MenuEntry = MenuItem & { category: string }
+/** Kategorije za meni na početnoj (bez hladnih napitaka). */
+export const homeCategories = menuCategories.filter(category => !category.homeHidden)
+
+export type MenuEntry = MenuItem & { category: L }
 export const allMenuItems: MenuEntry[] = menuCategories.flatMap(category => category.items.map(item => ({ ...item, category: category.name })))
+
+export const itemImage = (item: MenuItem, locale: Locale): SiteImage | undefined => item.photo && { src: `/images/menu/${item.id}.webp`, alt: item.photo[locale] }
 
 /** Pića u luku iznad tamne sekcije: samo ona koja imaju fotografiju. */
 const featuredIds = ['espresso', 'mali-makijato', 'kapucino', 'flat-white', 'salep', 'ruza', 'ledeni-latte-karamel', 'menta']
-export const featuredDrinks = featuredIds.map(id => allMenuItems.find(item => item.id === id)).filter((item): item is MenuEntry => Boolean(item?.image))
-
-export const formatPrice = (price: number) => `${price.toFixed(2).replace('.', ',')} KM`
+export const featuredDrinks = featuredIds.map(id => allMenuItems.find(item => item.id === id)).filter((item): item is MenuEntry => Boolean(item?.photo))
