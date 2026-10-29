@@ -6,6 +6,7 @@ import { BlossomBranch, LeafSprig, SingleBlossom } from './botanical'
 import PolaroidLineCarousel from './ui/polaroid-line-carousel'
 import { LogoMark } from './logo-mark'
 import { ReviewStack } from './ui/review-stack'
+import { RateUs } from './ui/rate-us'
 import { reviewSummary, reviews } from '@/data/reviews'
 
 const mapsLabel = <span className="sr-only"> (otvara Google Maps)</span>
@@ -68,6 +69,7 @@ export function Reviews() {
           <span>od 5 · {reviewSummary.count} recenzija na Google Maps <ArrowUpRight size={15} aria-hidden="true" /></span>
           {mapsLabel}
         </a>
+        <RateUs href={siteConfig.maps} />
       </div>
       <ReviewStack reviews={reviews} href={siteConfig.maps} />
     </div>

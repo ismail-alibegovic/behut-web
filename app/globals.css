@@ -350,6 +350,30 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .reviews-score strong { font-family: var(--font-display), serif; font-size: clamp(44px, 5vw, 64px); font-weight: 400; line-height: 1; color: var(--forest); }
 .reviews-score span { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
 .reviews-score:hover span { text-decoration: underline; text-underline-offset: 4px; }
+.rate-us { display: grid; gap: 12px; justify-items: start; width: min(100%, 380px); margin-top: 10px; padding: 20px 22px 22px; border: 1.5px dashed color-mix(in srgb, var(--forest) 28%, transparent); border-radius: var(--radius); background: color-mix(in srgb, var(--ivory) 72%, transparent); }
+.rate-us fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.rate-us legend { padding: 0; margin-bottom: 12px; font-family: var(--font-display), serif; font-size: clamp(21px, 2vw, 25px); line-height: 1.15; color: var(--forest); }
+.rate-us legend span { display: block; color: var(--green); }
+.rate-stars { display: flex; gap: 6px; }
+.rate-star { position: relative; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; color: color-mix(in srgb, var(--beige) 85%, var(--ivory)); cursor: pointer; transition: color .2s, transform .25s var(--ease); }
+.rate-star svg { width: 34px; height: 34px; fill: currentColor; stroke: color-mix(in srgb, var(--forest) 25%, transparent); stroke-width: .8; }
+.rate-star input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.rate-star:has(input:focus-visible) { outline: 3px solid var(--forest); outline-offset: 1px; }
+.rate-star[data-on='true'] { color: var(--gold); transform: translateY(-2px) scale(1.08); }
+.rate-star[data-on='true'] svg { stroke: color-mix(in srgb, var(--ink-deep) 35%, transparent); }
+/* Izbor: zvjezdice redom "iskoče" i bljesnu krugom. */
+.rate-star::after { content: ''; position: absolute; inset: 4px; border: 2px solid var(--gold); border-radius: 50%; opacity: 0; pointer-events: none; }
+.rate-stars[data-pulse='0'] .rate-star[data-picked='true'] svg { animation: star-pop-a .6s var(--ease) both; animation-delay: calc(var(--i) * 70ms); }
+.rate-stars[data-pulse='1'] .rate-star[data-picked='true'] svg { animation: star-pop-b .6s var(--ease) both; animation-delay: calc(var(--i) * 70ms); }
+.rate-stars[data-pulse='0'] .rate-star[data-picked='true']::after { animation: star-burst-a .7s ease-out both; animation-delay: calc(var(--i) * 70ms + 120ms); }
+.rate-stars[data-pulse='1'] .rate-star[data-picked='true']::after { animation: star-burst-b .7s ease-out both; animation-delay: calc(var(--i) * 70ms + 120ms); }
+@keyframes star-pop-a { 0% { transform: scale(.55) rotate(-25deg); } 60% { transform: scale(1.32) rotate(8deg); } 100% { transform: none; } }
+@keyframes star-pop-b { 0% { transform: scale(.55) rotate(-25deg); } 60% { transform: scale(1.32) rotate(8deg); } 100% { transform: none; } }
+@keyframes star-burst-a { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(1.7); } }
+@keyframes star-burst-b { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(1.7); } }
+.rate-label { min-height: 1.6em; font-size: 15px; font-weight: 700; color: var(--forest); }
+.rate-us[data-picked='false'] .rate-label { font-weight: 500; color: var(--text-soft); }
+.rate-cta { animation: rise .5s var(--ease) both; }
 .review-stack-wrap { display: grid; justify-items: center; gap: clamp(64px, 8vw, 120px); padding-bottom: 12px; }
 .review-stack { --u: .3rem; display: grid; grid-template-areas: 'stack'; place-items: center; padding: calc(4 * var(--u)) calc(18 * var(--u)) calc(13 * var(--u)) 0; }
 /* Svaka recenzija je čipkani papirić (900x617, unutrašnje polje 11-89% x 15-85%). */
