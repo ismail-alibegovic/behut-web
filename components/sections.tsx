@@ -3,6 +3,7 @@ import { ArrowUpRight, Camera, Lamp, MapPin, Sun } from 'lucide-react'
 import { images, siteConfig } from '@/data/site-config'
 import { SiteImage } from './site-image'
 import { BlossomBranch, LeafSprig, SingleBlossom } from './botanical'
+import PolaroidLineCarousel from './ui/polaroid-line-carousel'
 
 const mapsLabel = <span className="sr-only"> (otvara Google Maps)</span>
 
@@ -51,28 +52,19 @@ export function Story() {
   </section>
 }
 
-const instagramPhotos = [
-  { image: images.facade, caption: 'zelena vrata' },
-  { image: images.terrace, caption: 'pogled s terase' },
-  { image: images.guitar, caption: 'gitara i lampe' },
-  { image: images.entrance, caption: 'vidimo se unutra' },
-]
-
 export function InstagramSection() {
+  const reels = siteConfig.instagramReels
   return <section id="instagram" className="section" aria-labelledby="instagram-title" tabIndex={-1}>
     <div className="wrap">
       <div className="section-head insta-head reveal">
         <span className="eyebrow">Trenutke ne brojimo. Čuvamo ih.</span>
         <h2 id="instagram-title"><a href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={44} aria-hidden="true" /><span className="sr-only"> (otvara Instagram)</span></a></h2>
-        <p>Malo offline, malo na feedu. Prati naš svakodnevni merak.</p>
+        <p>Malo offline, malo na feedu. Povuci konopac ili klikni fotku.</p>
       </div>
-      <div className="insta-row">
-        {instagramPhotos.map(({ image, caption }) => <a key={image.src} className="insta-tile" href={siteConfig.instagram} target="_blank" rel="noreferrer" aria-label={`${image.alt}. Otvori Behut na Instagramu`}>
-          <SiteImage image={image} sizes="(min-width: 900px) 25vw, 45vw" />
-          <span className="caption" aria-hidden="true">{caption}</span>
-        </a>)}
-      </div>
-      <div className="insta-cta"><a className="btn btn-forest" href={siteConfig.instagram} target="_blank" rel="noreferrer">Prati nas na Instagramu<span className="btn-icon"><Camera size={17} aria-hidden="true" /></span></a></div>
+    </div>
+    <PolaroidLineCarousel slides={reels} initialIndex={Math.max(0, reels.findIndex(reel => reel.featured))} height="clamp(450px, 44vw, 580px)" ariaLabel="Behut reelovi s Instagrama" />
+    <div className="wrap">
+      <div className="insta-cta"><a className="btn btn-ghost" href={siteConfig.instagram} target="_blank" rel="noreferrer">Prati nas na Instagramu <Camera size={17} aria-hidden="true" /><span className="sr-only"> (otvara Instagram)</span></a></div>
     </div>
   </section>
 }

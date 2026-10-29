@@ -20,5 +20,14 @@ export const siteConfig = {
   phone: null as string | null,
   menuPdf: null as string | null,
   hero: { backdrop: images.city, fan: [images.terrace, images.entrance, images.facade] },
+  /** Reelovi u Instagram sekciji; `featured` je onaj koji je na početku u sredini. */
+  instagramReels: [
+    { reel: 'DTGLBZBDZHu', title: '@behut_cafe' },
+    { reel: 'DTnrqLeCJfv', title: '@behut_cafe' },
+    { reel: 'DPMcmKSDaCq', title: '#visitsarajevo', caption: '#behut #visitsarajevo' },
+    { reel: 'DKzh2WLt9hw', title: 'U Behutu', caption: 'U Behutu, gdje vrijeme stane, a sunce i čaj plešu polako – nastaje poezija', featured: true },
+    { reel: 'DPJ1vhWjfEc', title: '@behut_cafe' },
+    { reel: 'DOlooOojMgE', title: '@behut_cafe' },
+  ] as { reel: string; title: string; caption?: string; featured?: boolean }[],
   gallery: [images.guitar, images.city, images.interior, images.facade, images.entrance, images.terrace],
 }

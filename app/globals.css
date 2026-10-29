@@ -347,14 +347,7 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 
 /* ── Instagram ────────────────────────────────────────────────────── */
 .insta-head a { display: inline-flex; align-items: center; gap: 12px; }
-.insta-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2vw, 26px); }
-.insta-tile { position: relative; display: block; padding: 8px 8px 0; border-radius: 10px; background: var(--ivory); box-shadow: var(--shadow-soft); transform: rotate(var(--tilt, 0deg)); transition: transform .4s var(--ease); }
-.insta-tile .site-photo { aspect-ratio: 1; border-radius: 6px; }
-.insta-tile span.caption { display: block; padding: 10px 4px 12px; font-family: var(--font-display), serif; font-size: 15px; color: var(--forest); text-align: center; }
-.insta-tile:nth-child(odd) { --tilt: -2.5deg; }
-.insta-tile:nth-child(even) { --tilt: 2deg; }
-@media (hover: hover) and (prefers-reduced-motion: no-preference) { .insta-tile:hover { transform: rotate(0deg) translateY(-6px); } }
-@media (min-width: 900px) { .insta-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.insta-cta .btn { color: var(--forest); }
 .insta-cta { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 48px); }
 
 /* ── Lokacija ─────────────────────────────────────────────────────── */
