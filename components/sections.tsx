@@ -30,17 +30,18 @@ export function Story() {
       <h2 id="prica-title" className="story-title reveal"><span>Više od</span> <span>kafe.</span></h2>
       <div className="story-media reveal">
         <BlossomBranch className="story-branch" />
-        <figure className="story-photo"><SiteImage image={images.interior} sizes="(min-width: 900px) 380px, 80vw" /></figure>
+        <figure className="story-frame">
+          <span className="story-photo"><SiteImage image={images.interior} sizes="(min-width: 900px) 420px, 70vw" /></span>
+          <Image className="story-frame-img" src="/images/frames/green-frame.webp" alt="" width={576} height={768} sizes="(min-width: 900px) 540px, 90vw" />
+        </figure>
         <LeafSprig className="story-sprig" />
         <SingleBlossom className="story-blossom" />
       </div>
       <div className="story-copy reveal">
-        <span className="eyebrow">Dobro došli u Behut</span>
-        <p>Na Kovačima, među sarajevskim ulicama i poznatim pogledima, Behut je mjesto za kafu, razgovor i malo predaha.</p>
-        <p>Starinske lampe, zelena vrata i detalji koji bude uspomene. Ovdje se ne žuri. Ovdje se sjedi još malo.</p>
-        <ul className="story-list">
-          {['Bosanska kafa i tradicionalni sokovi', 'Terasa s pogledom na stari grad', 'Starinske lampe i zelena vrata'].map(text => <li key={text}><SingleBlossom />{text}</li>)}
-        </ul>
+        <h3>Dobrodošli u kafić Behut!</h3>
+        <p>U srcu naše čaršije, gdje miris svježe kafe susreće duh tradicije, otvorili smo vrata mjesta gdje ste uvijek među svojima. Ovdje se kafa ne pije na brzinu – ona se ćejfi, uz priču, osmijeh i toplu dobrodošlicu.</p>
+        <p>Bilo da ste na prolazu ili ste dio naše raje, kod nas ste uvijek kući. Neka vam svaki gutljaj bude rahatluk, a svaka posjeta razlog da se opet vratite.</p>
+        <p className="story-sign">Dobro nam došli!</p>
         <div className="story-facts">
           <div><strong>2024</strong><span>otvorili smo vrata</span></div>
           <div><strong>Kovači 20</strong><span>Sarajevo</span></div>
