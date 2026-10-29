@@ -40,7 +40,10 @@ export function DrinkShowcase({ locale }: { locale: Locale }) {
       <LeafSprig className="dark-sprig" />
       <div id="istaknuto-pice" className="showcase-grid wrap" aria-live="polite">
         <div className="showcase-visual">
-          {photo && <div className="showcase-photo" key={drink.id}><SiteImage image={photo} sizes="(min-width: 900px) 300px, 60vw" /></div>}
+          {photo && <div className="showcase-photo" key={drink.id}>
+            <span className="showcase-photo-bg" aria-hidden="true"><SiteImage image={{ ...photo, alt: '' }} sizes="200px" /></span>
+            <span className="showcase-photo-fg"><SiteImage image={photo} sizes="(min-width: 900px) 260px, 50vw" /></span>
+          </div>}
           <Image className="showcase-frame" src="/images/frames/oval-frame.webp" alt="" width={700} height={903} sizes="(min-width: 900px) 440px, 90vw" />
         </div>
         <div className="showcase-copy" key={`copy-${drink.id}`}>
