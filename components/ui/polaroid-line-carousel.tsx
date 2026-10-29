@@ -9,8 +9,9 @@ import * as React from "react"
  * overshoot; even at rest they sway in a light breeze. The one in the middle
  * is the one you're looking at.
  *
- * Behut verzija: svaka fotka je zvanični Instagram embed reela (samo video dio,
- * bez zaglavlja), boje dolaze iz tokena, a klik na srednju fotku otvara reel.
+ * Behut verzija: svaka fotka je zvanični Instagram embed reela, prikazan kao
+ * cijela objava (zaglavlje, video, ikone), boje dolaze iz tokena, a klik na
+ * srednju fotku otvara reel. Kad sve fotke stanu u širinu, red je centriran.
  */
 
 export type Slide = {
@@ -75,14 +76,10 @@ export function pad2(n: number): string {
 
 export const reelUrl = (id: string) => `https://www.instagram.com/reel/${id}/`
 
-// Instagram embed je širok najmanje 326px; video dio je 326x408 ispod zaglavlja od 54px,
-// a reel (9:16) u njemu je širok 229.5px s crnim trakama sa strane. Fotka (4:5) uzima sredinu reela.
+// Instagram embed je širok najmanje 326px; zaglavlje, video, ikone i red za komentar
+// zauzimaju gornjih ~620px. Fotka prikazuje tačno taj dio, skaliran na svoju širinu.
 const EMBED_W = 326
-const EMBED_HEADER = 54
-const MEDIA_H = 408
-const REEL_W = MEDIA_H * 9 / 16
-const REEL_X = (EMBED_W - REEL_W) / 2
-const CROP_Y = EMBED_HEADER + (MEDIA_H - REEL_W * 1.25) / 2
+const EMBED_H = 620
 
 const PL_CSS = [
   ".pl-root{position:relative;width:100%;overflow:hidden;color:var(--forest);user-select:none;-webkit-user-select:none;touch-action:pan-y;outline:none;cursor:grab}",
@@ -93,9 +90,9 @@ const PL_CSS = [
   ".pl-card[data-on='1']{cursor:pointer}",
   ".pl-print{margin-top:10px;background:var(--ivory);padding:10px 10px 0;box-shadow:0 1px 2px color-mix(in srgb,var(--ink-deep) 14%,transparent),0 18px 30px -16px color-mix(in srgb,var(--ink-deep) 50%,transparent);transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .5s ease}",
   ".pl-card[data-on='0'] .pl-print{transform:scale(.9);filter:saturate(.7) brightness(.96)}",
-  ".pl-shot{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--parchment)}",
+  ".pl-shot{position:relative;aspect-ratio:" + EMBED_W + "/" + EMBED_H + ";overflow:hidden;background:var(--ivory)}",
   // iframe je uvijek EMBED_W širok i skaliran na širinu fotke; klikove hvata kartica, ne embed.
-  ".pl-shot iframe{position:absolute;left:0;top:0;width:" + EMBED_W + "px;height:640px;border:0;transform-origin:0 0;pointer-events:none}",
+  ".pl-shot iframe{position:absolute;left:0;top:0;width:" + EMBED_W + "px;height:" + EMBED_H + "px;border:0;transform-origin:0 0;pointer-events:none}",
   ".pl-note{height:46px;display:flex;align-items:center;justify-content:center;padding:0 6px;font:400 15px/1.1 var(--font-display),Georgia,serif;color:var(--forest);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
   ".pl-peg{position:absolute;left:50%;top:0;width:10px;height:26px;margin-left:-5px;border-radius:2px;background:linear-gradient(90deg,color-mix(in srgb,var(--gold) 80%,var(--ink-deep)),color-mix(in srgb,var(--gold) 55%,var(--ivory)) 45%,var(--gold));box-shadow:0 2px 3px color-mix(in srgb,var(--ink-deep) 30%,transparent)}",
   ".pl-peg::after{content:'';position:absolute;left:4px;top:8px;width:2px;height:7px;background:color-mix(in srgb,var(--ink-deep) 40%,transparent);border-radius:1px}",
@@ -153,19 +150,23 @@ export default function PolaroidLineCarousel({
     if (!root) return
     const ro = new ResizeObserver(() => {
       const r = root.getBoundingClientRect()
-      // Na mobitelu je srednja fotka šira, susjedne vire sa strane.
-      const cw = Math.round(Math.max(150, Math.min(cardWidth, r.width * 0.6, r.height * 0.42)))
+      // Na mobitelu je srednja fotka šira, susjedne vire sa strane; visina fotke je ~1.9x širina + bilješka.
+      const cw = Math.round(Math.max(150, Math.min(cardWidth, r.width * 0.6, (r.height - 180) / 1.95)))
       setSize({ w: r.width, h: r.height, cw })
     })
     ro.observe(root)
     return () => ro.disconnect()
   }, [cardWidth])
 
-  // keep the target on the active print when the spacing changes
+  // Dok niko ne dira karusel: ako sve fotke stanu, red je centriran (aktivna je ona
+  // najbliža sredini); inače je početna fotka u sredini. Poslije toga prati aktivnu.
+  const touched = React.useRef(false)
   React.useEffect(() => {
-    sim.current.target = activeRef.current * spacing
-    sim.current.off = activeRef.current * spacing
-  }, [spacing])
+    const fits = n * spacing <= size.w * 0.95
+    const off = touched.current ? activeRef.current * spacing : fits ? ((n - 1) / 2) * spacing : start * spacing
+    sim.current.target = off
+    sim.current.off = off
+  }, [spacing, size.w, n, start])
 
   // the simulation, written straight to the DOM each frame
   React.useEffect(() => {
@@ -247,6 +248,7 @@ export default function PolaroidLineCarousel({
   }, [autoplay, n, goTo])
 
   const onDown = (e: React.PointerEvent) => {
+    touched.current = true
     if ((e.target as HTMLElement).closest(".pl-bar")) return
     lastTouch.current = performance.now()
     drag.current = { x: e.clientX, off: sim.current.off, lx: e.clientX, lt: e.timeStamp, v: 0, moved: false }
@@ -290,6 +292,7 @@ export default function PolaroidLineCarousel({
     else goTo(i)
   }
   const step = (dir: number) => {
+    touched.current = true
     lastTouch.current = performance.now()
     // Od cilja, ne od trenutne pozicije, da brzi klikovi idu više koraka.
     goTo(Math.round(sim.current.target / spacing) + dir)
@@ -303,7 +306,7 @@ export default function PolaroidLineCarousel({
   }
 
   const s = slides[active]
-  const scale = (size.cw - 20) / REEL_W
+  const scale = (size.cw - 20) / EMBED_W
 
   return (
     <div
@@ -335,7 +338,7 @@ export default function PolaroidLineCarousel({
                 loading="lazy"
                 tabIndex={-1}
                 scrolling="no"
-                style={{ transform: `translate(${(-REEL_X * scale).toFixed(1)}px, ${(-CROP_Y * scale).toFixed(1)}px) scale(${scale.toFixed(4)})` }}
+                style={{ transform: `scale(${scale.toFixed(4)})` }}
               />
             </div>
             <div className="pl-note">{sl.title}</div>

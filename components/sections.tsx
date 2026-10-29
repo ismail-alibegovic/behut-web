@@ -83,7 +83,7 @@ export function InstagramSection() {
         <p>Malo offline, malo na feedu. Povuci konopac ili klikni fotku.</p>
       </div>
     </div>
-    <PolaroidLineCarousel slides={reels} initialIndex={Math.max(0, reels.findIndex(reel => reel.featured))} height="clamp(450px, 44vw, 580px)" ariaLabel="Behut reelovi s Instagrama" />
+    <PolaroidLineCarousel slides={reels} initialIndex={Math.max(0, reels.findIndex(reel => reel.featured))} height="clamp(620px, 52vw, 720px)" ariaLabel="Behut reelovi s Instagrama" />
     <div className="wrap">
       <div className="insta-cta"><a className="btn btn-ghost" href={siteConfig.instagram} target="_blank" rel="noreferrer">Prati nas na Instagramu <Camera size={17} aria-hidden="true" /><span className="sr-only"> (otvara Instagram)</span></a></div>
     </div>
