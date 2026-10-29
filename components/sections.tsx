@@ -101,11 +101,13 @@ export function Footer() {
   return <footer className="footer on-dark">
     <BlossomBranch />
     <div className="wrap footer-top">
-      <a href="#" className="footer-logo" aria-label="BEHUT Sarajevo, na vrh stranice"><Image src={images.logo} alt="BEHUT Sarajevo" width={640} height={454} sizes="140px" /></a>
-      <p className="footer-tag">Dobra kafa. Dobri ljudi. <em>To je Behut.</em></p>
+      <div className="footer-intro">
+        <p className="footer-tag">Dobra kafa. Dobri ljudi. <em>To je Behut.</em></p>
+        <a className="btn btn-gold" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span>{mapsLabel}</a>
+      </div>
       <div className="footer-col">
         <h2>Posjeti nas</h2>
-        <a href={siteConfig.maps} target="_blank" rel="noreferrer">Kovači 20, 71000 Sarajevo{mapsLabel}</a>
+        <a href={siteConfig.maps} target="_blank" rel="noreferrer">Kovači 20<br />71000 Sarajevo{mapsLabel}</a>
         {siteConfig.openingHours && <span>{siteConfig.openingHours}</span>}
         {siteConfig.phone && <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>}
       </div>
@@ -114,8 +116,22 @@ export function Footer() {
         <a href="#meni">Meni</a>
         <a href="#prica">Naša priča</a>
         <a href="#galerija">Galerija</a>
-        <a href={siteConfig.instagram} target="_blank" rel="noreferrer">Instagram<span className="sr-only"> (otvara Instagram)</span></a>
+        <a href="#lokacija">Lokacija</a>
       </nav>
+      <div className="footer-col">
+        <h2>Prati nas</h2>
+        <a className="footer-social" href={siteConfig.instagram} target="_blank" rel="noreferrer"><Camera size={18} aria-hidden="true" />@behut_cafe<span className="sr-only"> (otvara Instagram)</span></a>
+      </div>
+    </div>
+    <div className="wrap footer-brand">
+      <a href="#" className="footer-logo" aria-label="BEHUT Sarajevo, na vrh stranice"><Image src={images.logo} alt="" width={640} height={454} sizes="200px" /></a>
+      <div className="footer-wordmark">
+        {/* textLength rasteže riječ tačno na širinu kolone, na svakom ekranu. */}
+        <svg viewBox="0 0 1000 196" role="img" aria-label="Behut">
+          <text x="0" y="190" textLength="1000" lengthAdjust="spacingAndGlyphs">BEHUT</text>
+        </svg>
+        <span>Sarajevo · Kovači 20 · od 2024.</span>
+      </div>
     </div>
     <div className="wrap footer-bottom">
       <span>© {new Date().getFullYear()} BEHUT Sarajevo</span>
