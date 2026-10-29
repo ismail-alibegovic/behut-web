@@ -32,7 +32,7 @@ export function DrinkShowcase() {
         return <li key={item.id}><button className="chip" style={{ '--t': t, '--t2': t * t } as CSSProperties} aria-pressed={selected === index} aria-controls="istaknuto-pice" onClick={() => select(index)}>{item.name.bs}</button></li>
       })}
     </ul>
-    <div className="showcase-dark dark-torn on-dark">
+    <div className="showcase-dark dark-torn on-dark beans">
       <BlossomBranch className="dark-branch" />
       <LeafSprig className="dark-sprig" />
       <div id="istaknuto-pice" className="showcase-grid wrap" aria-live="polite">

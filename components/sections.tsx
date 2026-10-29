@@ -11,7 +11,7 @@ import { reviewSummary, reviews } from '@/data/reviews'
 const mapsLabel = <span className="sr-only"> (otvara Google Maps)</span>
 
 export function CtaStrip() {
-  return <section className="cta-strip dark-torn on-dark" aria-labelledby="cta-title">
+  return <section className="cta-strip dark-torn on-dark beans" aria-labelledby="cta-title">
     <BlossomBranch className="cta-branch" />
     <LeafSprig className="cta-sprig" />
     <div className="wrap">
@@ -126,7 +126,7 @@ export function Location() {
 }
 
 export function Footer() {
-  return <footer className="footer on-dark">
+  return <footer className="footer on-dark beans">
     <BlossomBranch />
     <div className="wrap footer-top">
       <div className="footer-intro">

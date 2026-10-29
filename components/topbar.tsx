@@ -95,7 +95,7 @@ export function Topbar() {
       {mapsCta('float-cta')}
       {menuButton}
     </div>, document.body)}
-    {open && createPortal(<div ref={panel} id="mobilni-meni" className="mobile-panel on-dark" role="dialog" aria-modal="true" aria-label="Navigacija">
+    {open && createPortal(<div ref={panel} id="mobilni-meni" className="mobile-panel on-dark beans" role="dialog" aria-modal="true" aria-label="Navigacija">
       <div className="mobile-panel-top">
         <LogoMark className="panel-logo" />
         <button className="panel-close" aria-label="Zatvori navigaciju" onClick={() => setOpen(false)}><X size={22} aria-hidden="true" /></button>

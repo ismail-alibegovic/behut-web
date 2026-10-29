@@ -108,6 +108,15 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .section-head p { max-width: 46ch; color: var(--text-soft); }
 .botanical { position: absolute; pointer-events: none; }
 
+/* Zrna kafe ton-u-ton na svim zelenim površinama (ista zrna kao u heroju). */
+.beans::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: var(--beans-color, color-mix(in srgb, var(--ivory) 9%, var(--green)));
+  -webkit-mask: url('/textures/coffee-beans-tile.webp') 0 0 / clamp(480px, 52vw, 760px) auto repeat, var(--beans-fade, linear-gradient(#000 0 0));
+  -webkit-mask-composite: source-in;
+  mask: url('/textures/coffee-beans-tile.webp') 0 0 / clamp(480px, 52vw, 760px) auto repeat, var(--beans-fade, linear-gradient(#000 0 0));
+  mask-composite: intersect; }
+.footer { --beans-fade: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%); }
+.cta-strip { --beans-color: color-mix(in srgb, var(--ivory) 10%, var(--green)); }
+
 /* ── Dugmad ───────────────────────────────────────────────────────── */
 .btn { display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 6px 6px 22px; border-radius: 999px; font-size: 14px; font-weight: 700; letter-spacing: .02em; white-space: nowrap; transition: transform .25s var(--ease), background-color .25s, box-shadow .25s; }
 .btn-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; flex: none; transition: transform .25s var(--ease); }
@@ -129,9 +138,9 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .hero-card { position: relative; overflow: hidden; max-width: 1320px; margin-inline: auto; padding: 14px clamp(14px, 3vw, 44px) clamp(32px, 4svh, 52px); border-radius: var(--radius-lg); background: var(--ivory); box-shadow: 0 40px 80px -40px color-mix(in srgb, var(--ink-deep) 90%, transparent); }
 .hero-beans { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: var(--beige); opacity: .55;
   /* Crtež zrna je samo maska; boja dolazi iz tokena. Sredina ostaje mirna zbog naslova. */
-  -webkit-mask: url('/textures/coffee-beans.webp') 0 0 / clamp(260px, 30vw, 400px) auto repeat, radial-gradient(ellipse 46% 42% at 50% 42%, transparent 35%, #000 85%);
+  -webkit-mask: url('/textures/coffee-beans-tile.webp') 0 0 / clamp(520px, 60vw, 800px) auto repeat, radial-gradient(ellipse 46% 42% at 50% 42%, transparent 35%, #000 85%);
   -webkit-mask-composite: source-in;
-  mask: url('/textures/coffee-beans.webp') 0 0 / clamp(260px, 30vw, 400px) auto repeat, radial-gradient(ellipse 46% 42% at 50% 42%, transparent 35%, #000 85%);
+  mask: url('/textures/coffee-beans-tile.webp') 0 0 / clamp(520px, 60vw, 800px) auto repeat, radial-gradient(ellipse 46% 42% at 50% 42%, transparent 35%, #000 85%);
   mask-composite: intersect; }
 .hero-branch { width: clamp(110px, 15vw, 230px); left: clamp(-36px, -1vw, -8px); bottom: clamp(24px, 6vw, 90px); color: var(--green); opacity: .5; }
 .hero-sprig { width: clamp(80px, 10vw, 150px); right: clamp(-10px, 1vw, 24px); top: clamp(120px, 22vw, 300px); color: var(--green); opacity: .45; transform: rotate(14deg); }
@@ -199,10 +208,10 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 @media (prefers-reduced-motion: no-preference) { .float-bar { animation: drop .45s var(--ease) both; } }
 @keyframes drop { from { opacity: 0; transform: translate(-50%, -24px); } }
 .mobile-panel { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; padding: 18px var(--gutter) 32px; overflow-x: hidden; overflow-y: auto; background: var(--forest); }
-.mobile-panel-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid color-mix(in srgb, var(--ivory) 16%, transparent); }
+.mobile-panel-top { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid color-mix(in srgb, var(--ivory) 16%, transparent); }
 .panel-logo { width: 104px; --logo-color: var(--ivory); }
 .panel-close { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--gold); color: var(--ink-deep); }
-.mobile-panel nav { display: grid; margin-block: auto; padding-block: 32px; }
+.mobile-panel nav { position: relative; z-index: 1; display: grid; margin-block: auto; padding-block: 32px; }
 .mobile-panel nav a { display: flex; align-items: baseline; gap: 14px; padding-block: 12px; border-bottom: 1px solid color-mix(in srgb, var(--ivory) 12%, transparent); font-family: var(--font-display), serif; font-size: clamp(32px, 9vw, 48px); line-height: 1.1; }
 .mobile-panel nav a small { font-family: var(--font-body), sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--gold); }
 .mobile-panel-foot { position: relative; z-index: 1; display: grid; gap: 16px; justify-items: start; color: var(--on-dark-soft); font-size: 15px; }
@@ -421,12 +430,6 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 
 /* ── Footer ───────────────────────────────────────────────────────── */
 .footer { position: relative; margin-top: clamp(40px, 6vw, 80px); padding: calc(var(--torn) + clamp(48px, 6vw, 80px)) 0 28px; background: var(--forest); overflow: hidden; -webkit-mask: url('/textures/torn-top.svg') top / 100% var(--torn) no-repeat, linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--torn) + 2px) no-repeat; mask: url('/textures/torn-top.svg') top / 100% var(--torn) no-repeat, linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--torn) + 2px) no-repeat; }
-/* Ista zrna kafe kao u heroju, ton-u-ton zelena, da tamna površina ne bude prazna. */
-.footer::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: color-mix(in srgb, var(--ivory) 9%, var(--green));
-  -webkit-mask: url('/textures/coffee-beans.webp') 0 0 / clamp(240px, 26vw, 380px) auto repeat, linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask: url('/textures/coffee-beans.webp') 0 0 / clamp(240px, 26vw, 380px) auto repeat, linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
-  mask-composite: intersect; }
 .footer-top { position: relative; z-index: 1; display: grid; gap: 36px 28px; grid-template-columns: repeat(2, minmax(0, 1fr)); padding-bottom: clamp(40px, 6vw, 72px); }
 .footer-intro { grid-column: 1 / -1; display: grid; gap: 22px; justify-items: start; }
 .footer-tag { max-width: 15ch; font-family: var(--font-display), serif; font-size: clamp(30px, 3.6vw, 48px); font-weight: 550; line-height: 1.08; color: var(--ivory); }
