@@ -61,11 +61,11 @@ export function ReviewStack({ reviews, href }: { reviews: Review[]; href: string
             <span className="review-avatar" aria-hidden="true">{review.avatar ? <img src={review.avatar} alt="" /> : review.author.charAt(0)}</span>
             <span className="review-who">
               <strong>{review.author}</strong>
-              <Stars rating={review.rating} />
+              {review.rating !== undefined && <Stars rating={review.rating} />}
             </span>
             <GoogleMark />
           </span>
-          <span className="review-text">{review.text}</span>
+          <span className="review-text" lang={review.lang}>{review.text}</span>
           <span className="review-foot">{review.date && <span>{review.date}</span>}<span>Google recenzija</span></span>
         </a>
       })}
