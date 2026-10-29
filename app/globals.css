@@ -334,14 +334,14 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .reviews-score span { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
 .reviews-score:hover span { text-decoration: underline; text-underline-offset: 4px; }
 .review-stack-wrap { display: grid; justify-items: center; gap: clamp(64px, 8vw, 120px); padding-bottom: 12px; }
-.review-stack { --u: .55rem; display: grid; grid-template-areas: 'stack'; place-items: center; padding: calc(3 * var(--u)) calc(10 * var(--u)) calc(6 * var(--u)) 0; }
-.review-card { grid-area: stack; position: relative; display: flex; flex-direction: column; gap: 12px; width: min(76vw, 380px); min-height: 190px; padding: 18px 20px; border-radius: var(--radius); border: 1px solid color-mix(in srgb, var(--beige) 80%, transparent); background: var(--ivory); color: var(--text); box-shadow: 0 24px 40px -26px color-mix(in srgb, var(--ink-deep) 70%, transparent); transform: translate(calc(var(--x) * var(--u)), calc(var(--y) * var(--u))) skewY(-8deg); transition: transform .5s var(--ease), filter .5s var(--ease), box-shadow .5s var(--ease); }
-.review-card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: color-mix(in srgb, var(--parchment) 55%, transparent); opacity: 0; pointer-events: none; transition: opacity .5s var(--ease); }
-.review-card[data-back='true'] { filter: grayscale(1); }
-.review-card[data-back='true']::before { opacity: 1; }
+.review-stack { --u: .3rem; display: grid; grid-template-areas: 'stack'; place-items: center; padding: calc(4 * var(--u)) calc(18 * var(--u)) calc(13 * var(--u)) 0; }
+/* Svaka recenzija je čipkani papirić (900x617, unutrašnje polje 11-89% x 15-85%). */
+.review-card { grid-area: stack; position: relative; display: flex; flex-direction: column; gap: 10px; width: min(72vw, 460px); aspect-ratio: 900 / 617; padding: 10.6% 13% 12%; overflow: hidden; background: url('/images/frames/lace-card.webp') center / 100% 100% no-repeat; color: var(--text); filter: drop-shadow(0 16px 18px color-mix(in srgb, var(--ink-deep) 32%, transparent)); transform: translate(calc(var(--x) * var(--u)), calc(var(--y) * var(--u))) rotate(var(--r, 0deg)) skewY(-6deg); transition: transform .5s var(--ease), filter .5s var(--ease); }
+.review-card[data-back='true'] { filter: grayscale(.25) brightness(.96) drop-shadow(0 10px 12px color-mix(in srgb, var(--ink-deep) 22%, transparent)); }
+.review-card[data-back='true'] > * { opacity: .55; transition: opacity .5s var(--ease); }
 .review-card:focus-visible { outline-offset: 4px; }
 .review-head { display: flex; align-items: center; gap: 12px; }
-.review-avatar { display: grid; place-items: center; flex: none; width: 44px; height: 44px; overflow: hidden; border-radius: 50%; background: var(--gold); color: var(--ink-deep); font-family: var(--font-display), serif; font-size: 20px; }
+.review-avatar { display: grid; place-items: center; flex: none; width: 38px; height: 38px; overflow: hidden; border-radius: 50%; background: var(--gold); color: var(--ink-deep); font-family: var(--font-display), serif; font-size: 20px; }
 .review-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .review-who { display: grid; gap: 3px; flex: 1; min-width: 0; }
 .review-who strong { overflow: hidden; font-size: 15px; white-space: nowrap; text-overflow: ellipsis; color: var(--forest); }
@@ -349,12 +349,18 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .review-stars svg { width: 15px; height: 15px; fill: color-mix(in srgb, var(--beige) 70%, transparent); }
 .review-stars svg[data-on='true'] { fill: var(--gold); }
 .review-g { flex: none; width: 22px; height: 22px; color: var(--forest); }
-.review-text { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 4; font-size: 15px; line-height: 1.6; color: var(--text-soft); }
+.review-text { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; font-size: clamp(13px, 1.1vw, 15px); line-height: 1.6; color: var(--text-soft); }
 .review-foot { display: flex; justify-content: space-between; gap: 12px; margin-top: auto; font-size: 13px; color: var(--text-soft); }
 .review-controls { display: flex; align-items: center; gap: 16px; font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--text-soft); }
 .review-controls .round-btn { border-color: var(--line); color: var(--forest); }
 .review-controls .round-btn:hover { background: color-mix(in srgb, var(--forest) 8%, transparent); border-color: var(--forest); }
-@media (min-width: 640px) { .review-stack { --u: 1rem; } }
+@media (max-width: 639px) {
+  .review-card { gap: 6px; }
+  .review-avatar { width: 30px; height: 30px; font-size: 16px; }
+  .review-text { -webkit-line-clamp: 2; }
+  .review-foot { display: none; }
+}
+@media (min-width: 640px) { .review-stack { --u: .9rem; } }
 @media (min-width: 1000px) { .reviews-grid { grid-template-columns: 4fr 7fr; } }
 
 /* ── Galerija ─────────────────────────────────────────────────────── */

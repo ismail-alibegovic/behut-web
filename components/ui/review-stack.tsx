@@ -5,16 +5,19 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import type { Review } from '@/data/reviews'
 
 /*
- * Na osnovu dostavljene "twitter testimonial cards" komponente: tri nagnute
- * kartice naslagane jedna iza druge; hover (ili prvi tap na mobitelu) podigne
- * karticu i razmakne one ispred nje. Ovdje su to Google recenzije u Behut
- * bojama, a strelice okreću špil kroz sve recenzije.
+ * Na osnovu dostavljene "twitter testimonial cards" komponente: nagnute
+ * kartice (ovdje čipkani papirići) naslagane jedna iza druge; hover (ili prvi
+ * tap na mobitelu) podigne karticu i razmakne one ispred nje. Ovdje su to
+ * Google recenzije u Behut bojama, a strelice okreću špil kroz sve recenzije.
  */
 
-// Pomaci u "jedinicama" (--u: 1rem na desktopu, manje na mobitelu): [x, y] po poziciji u špilu.
-const BASE = [[0, 0], [4, 2.5], [8, 5]] as const
-// Kad je fokusirana kartica iza, one ispred se razmaknu da je otkriju.
-const PUSHED: Record<string, readonly [number, number]> = { '0-1': [6, 8], '0-2': [10, 11], '1-2': [10, 10] }
+// Koliko kartica se vidi u špilu i pomak svake sljedeće, u "jedinicama" (--u: 1rem na desktopu).
+const DECK = 5
+const STEP = [3.2, 2.2] as const
+// Blagi, različiti nagibi da špil izgleda kao gomila papirića, ne kao blok.
+const TILT = [-5, 3.5, -2.5, 2, 0]
+// Kad je fokusirana kartica iza, one ispred nje se razmaknu da je otkriju.
+const PUSH = [5, 7] as const
 
 function GoogleMark() {
   return <svg className="review-g" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -36,7 +39,7 @@ export function ReviewStack({ reviews, href }: { reviews: Review[]; href: string
   const [hovered, setHovered] = useState<number | null>(null)
   const [active, setActive] = useState<number | null>(null)
   const n = reviews.length
-  const deck = Array.from({ length: Math.min(3, n) }, (_, i) => (start + i) % n)
+  const deck = Array.from({ length: Math.min(DECK, n) }, (_, i) => (start + i) % n)
   const focused = hovered ?? active
 
   const rotate = (dir: number) => { setStart(s => (s + dir + n) % n); setActive(null) }
@@ -45,9 +48,11 @@ export function ReviewStack({ reviews, href }: { reviews: Review[]; href: string
     <div className="review-stack">
       {deck.map((reviewIndex, pos) => {
         const review = reviews[reviewIndex]
-        const [x, y] = (focused !== null && PUSHED[`${focused}-${pos}`]) || BASE[pos]
-        const lift = focused === pos ? -2.5 : 0
-        const style = { '--x': x, '--y': y + lift, zIndex: pos + 1 } as CSSProperties
+        const pushed = focused !== null && pos > focused
+        const x = pos * STEP[0] + (pushed ? PUSH[0] : 0)
+        const y = pos * STEP[1] + (pushed ? PUSH[1] : 0) + (focused === pos ? -2.5 : 0)
+        const tilt = pos === deck.length - 1 || focused === pos ? 0 : TILT[pos]
+        const style = { '--x': x, '--y': y, '--r': `${tilt}deg`, zIndex: pos + 1 } as CSSProperties
         return <a key={reviewIndex} className="review-card" data-back={pos < deck.length - 1 && focused !== pos} style={style}
           href={href} target="_blank" rel="noreferrer"
           onMouseEnter={() => setHovered(pos)} onMouseLeave={() => setHovered(null)}
@@ -70,7 +75,7 @@ export function ReviewStack({ reviews, href }: { reviews: Review[]; href: string
         </a>
       })}
     </div>
-    {n > 3 && <div className="review-controls">
+    {n > 1 && <div className="review-controls">
       <button className="round-btn" onClick={() => rotate(-1)} aria-label="Prethodna recenzija"><ArrowLeft size={18} aria-hidden="true" /></button>
       <span aria-live="polite">{String(start + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}</span>
       <button className="round-btn" onClick={() => rotate(1)} aria-label="Sljedeća recenzija"><ArrowRight size={18} aria-hidden="true" /></button>
