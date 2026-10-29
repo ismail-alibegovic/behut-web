@@ -52,7 +52,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  background: var(--ivory) url('/textures/paper.webp') center top / cover no-repeat;
+  background: var(--ivory);
 }
 /* Papir je prosječno #e5d5c4; multiply-sloj ga vuče prema ivory tonu. */
 body::after {
@@ -61,7 +61,8 @@ body::after {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: var(--ivory);
+  /* Fino zrno je SVG, pa ostaje oštro na svakoj rezoluciji. */
+  background: url('/textures/grain.svg') 0 0 / 220px repeat, var(--ivory);
   mix-blend-mode: multiply;
   opacity: .55;
 }
@@ -72,10 +73,11 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: url('/textures/paper.webp') center / cover no-repeat;
+  background: url('/textures/paper-portrait.webp') center / cover no-repeat;
 }
+@media (orientation: landscape) { body::before { background-image: url('/textures/paper.webp'); } }
 @media (min-width: 1024px) {
-  body { background-attachment: fixed; }
+  body { background: var(--ivory) url('/textures/paper.webp') center / cover no-repeat fixed; }
   body::before { display: none; }
 }
 
