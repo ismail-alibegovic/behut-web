@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import Image from 'next/image'
-import { ArrowUpRight, Camera, Menu, X } from 'lucide-react'
-import { images, siteConfig } from '@/data/site-config'
+import { ArrowUpRight, MapPin, Menu, X } from 'lucide-react'
+import { siteConfig } from '@/data/site-config'
 import { LeafSprig } from './botanical'
+import { LogoMark } from './logo-mark'
 
 const leftLinks = [{ href: '#meni', label: 'Meni' }, { href: '#prica', label: 'Naša priča' }, { href: '#galerija', label: 'Galerija' }]
 const rightLinks = [{ href: '#lokacija', label: 'Lokacija' }]
@@ -78,26 +78,34 @@ export function Topbar() {
     }
   }, [open])
 
+  const mapsCta = (className = '') => <a className={`nav-cta ${className}`} href={siteConfig.maps} target="_blank" rel="noreferrer"><MapPin size={16} aria-hidden="true" />Kako do nas<span className="sr-only"> (otvara Google Maps)</span></a>
+  const menuButton = <button className="menu-toggle" aria-expanded={open} aria-controls="mobilni-meni" onClick={openPanel}><span>Meni</span><Menu size={18} aria-hidden="true" /></button>
+
   return <header ref={header} className="topbar">
     <nav className="topbar-links" aria-label="Glavna navigacija">{leftLinks.map(navLink)}</nav>
-    <a className="icon-btn topbar-social" href={siteConfig.instagram} target="_blank" rel="noreferrer" aria-label="Behut na Instagramu"><Camera size={18} aria-hidden="true" /></a>
-    <a href="#" className="topbar-logo" aria-label="BEHUT Sarajevo, na vrh stranice"><Image src={images.logo} alt="BEHUT Sarajevo, osnovan 2024." width={640} height={454} priority sizes="150px" /></a>
+    <a href="#" className="topbar-logo" aria-label="BEHUT Sarajevo, na vrh stranice"><LogoMark /></a>
     <div className="topbar-right">
       <nav className="topbar-links" aria-label="Dodatna navigacija">{rightLinks.map(navLink)}</nav>
-      <a className="icon-btn topbar-insta" href={siteConfig.instagram} target="_blank" rel="noreferrer" aria-label="Behut na Instagramu"><Camera size={18} aria-hidden="true" /></a>
-      <a className="btn btn-gold topbar-cta" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span><span className="sr-only"> (otvara Google Maps)</span></a>
-      <button className="menu-toggle" aria-expanded={open} aria-controls="mobilni-meni" aria-label="Otvori navigaciju" onClick={openPanel}><Menu size={20} aria-hidden="true" /></button>
+      {mapsCta('topbar-cta')}
+      {menuButton}
     </div>
     {floating && createPortal(<div className="float-bar">
       <a href="#" className="float-mark" aria-label="BEHUT Sarajevo, na vrh stranice"><span>Behut</span><small>Sarajevo</small></a>
       <nav className="float-links" aria-label="Brza navigacija">{allLinks.map(navLink)}</nav>
-      <a className="btn btn-gold float-cta" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={16} aria-hidden="true" /></span><span className="sr-only"> (otvara Google Maps)</span></a>
-      <button className="menu-toggle" aria-expanded={open} aria-controls="mobilni-meni" aria-label="Otvori navigaciju" onClick={openPanel}><Menu size={20} aria-hidden="true" /></button>
+      {mapsCta('float-cta')}
+      {menuButton}
     </div>, document.body)}
     {open && createPortal(<div ref={panel} id="mobilni-meni" className="mobile-panel on-dark" role="dialog" aria-modal="true" aria-label="Navigacija">
-      <div className="mobile-panel-top"><span className="eyebrow">Behut · Kovači 20</span><button className="menu-toggle" aria-label="Zatvori navigaciju" onClick={() => setOpen(false)}><X size={22} aria-hidden="true" /></button></div>
-      <nav aria-label="Mobilna navigacija">{[...allLinks, { href: '#instagram', label: 'Instagram' }].map(link => <a key={link.href} href={link.href} onClick={event => { event.preventDefault(); pending.current = link.href; history.replaceState(null, '', link.href); setOpen(false) }}>{link.label}</a>)}</nav>
-      <div className="mobile-panel-foot"><span>Kovači 20, Sarajevo</span><a className="btn btn-gold" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span></a></div>
+      <div className="mobile-panel-top">
+        <LogoMark className="panel-logo" />
+        <button className="panel-close" aria-label="Zatvori navigaciju" onClick={() => setOpen(false)}><X size={22} aria-hidden="true" /></button>
+      </div>
+      <nav aria-label="Mobilna navigacija">{[...allLinks, { href: '#instagram', label: 'Instagram' }].map((link, index) => <a key={link.href} href={link.href} onClick={event => { event.preventDefault(); pending.current = link.href; history.replaceState(null, '', link.href); setOpen(false) }}><small>{String(index + 1).padStart(2, '0')}</small>{link.label}</a>)}</nav>
+      <div className="mobile-panel-foot">
+        <span>Kovači 20, 71000 Sarajevo</span>
+        {mapsCta('nav-cta-gold')}
+        <a className="text-link" href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={15} aria-hidden="true" /></a>
+      </div>
       <LeafSprig />
     </div>, document.body)}
   </header>

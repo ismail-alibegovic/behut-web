@@ -10,6 +10,8 @@
   --parchment: #e8ddca;
   --beige: #cdbb9c;
   --gold: #d6ac61;
+  /* Samo za logo u footeru (traženo: čisto bijeli logo na tamnom). */
+  --white: #ffffff;
 
   --text: var(--ink-deep);
   --text-soft: color-mix(in srgb, var(--ink-deep) 80%, var(--ivory));
@@ -135,26 +137,32 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .hero-sprig { width: clamp(80px, 10vw, 150px); right: clamp(-10px, 1vw, 24px); top: clamp(120px, 22vw, 300px); color: var(--green); opacity: .45; transform: rotate(14deg); }
 .hero-blossom { width: clamp(34px, 4vw, 56px); right: clamp(60px, 14vw, 240px); bottom: clamp(30px, 6vw, 110px); color: var(--green); opacity: .5; }
 
-.topbar { position: relative; z-index: 3; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding-block: 6px 14px; border-bottom: 1px solid var(--line); }
+.topbar { position: relative; z-index: 3; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; padding-block: 6px 14px; border-bottom: 1px solid var(--line); }
 .topbar-links { display: none; align-items: center; gap: clamp(20px, 2.4vw, 36px); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--forest); }
 .topbar-links a, .float-links a { position: relative; padding-block: 8px; }
 .topbar-links a::after, .float-links a::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); transform: translateX(-50%) scale(0); transition: transform .3s var(--ease); }
 .topbar-links a:hover::after, .float-links a:hover::after, .topbar-links a[aria-current]::after, .float-links a[aria-current]::after { transform: translateX(-50%) scale(1); }
-.icon-btn { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--line); color: var(--forest); transition: background-color .25s, border-color .25s; }
-.icon-btn:hover { border-color: var(--forest); background: color-mix(in srgb, var(--forest) 6%, transparent); }
-.topbar-social { grid-column: 1; grid-row: 1; justify-self: start; }
-.topbar-logo { grid-column: 2; grid-row: 1; display: block; width: clamp(96px, 10vw, 148px); }
-.topbar-logo img { width: 100%; height: auto; }
-.topbar-right { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: clamp(14px, 1.8vw, 26px); }
-.topbar-insta, .topbar-cta { display: none; }
-.menu-toggle { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--forest); color: var(--ivory); transition: background-color .25s; }
+.logo-mark { display: block; width: 100%; aspect-ratio: 640 / 454; background: var(--logo-color, var(--forest)); -webkit-mask: url('/images/behut-logo.webp') center / contain no-repeat; mask: url('/images/behut-logo.webp') center / contain no-repeat; }
+.topbar-logo { grid-column: 1; grid-row: 1; justify-self: start; display: block; width: clamp(92px, 24vw, 150px); --logo-color: var(--forest); }
+.topbar-right { grid-column: 2; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: clamp(14px, 1.8vw, 26px); }
+.nav-cta { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px 0 16px; border-radius: 999px; background: var(--forest); color: var(--ivory); font-size: 14px; font-weight: 700; letter-spacing: .02em; white-space: nowrap; transition: background-color .25s, transform .25s var(--ease); }
+.nav-cta svg { color: var(--gold); }
+.nav-cta:hover { background: var(--green); transform: translateY(-1px); }
+.nav-cta-gold { background: var(--gold); color: var(--ink-deep); }
+.nav-cta-gold svg { color: var(--ink-deep); }
+.nav-cta-gold:hover { background: color-mix(in srgb, var(--gold) 85%, var(--ivory)); }
+/* CTA u navigaciji je samo na desktopu; na mobitelu je u meniju. */
+.nav-cta.topbar-cta, .nav-cta.float-cta { display: none; }
+.menu-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 18px; border-radius: 999px; background: var(--forest); color: var(--ivory); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; transition: background-color .25s; }
 .menu-toggle:hover { background: var(--green); }
 @media (min-width: 1024px) {
+  .topbar { grid-template-columns: 1fr auto 1fr; }
   .topbar-links { display: flex; }
   .topbar > .topbar-links { grid-column: 1; grid-row: 1; justify-self: start; }
-  .topbar-social, .menu-toggle { display: none; }
-  .topbar-insta { display: grid; }
-  .topbar-cta { display: inline-flex; }
+  .topbar-logo { grid-column: 2; justify-self: center; width: clamp(110px, 10vw, 150px); }
+  .topbar-right { grid-column: 3; }
+  .nav-cta.topbar-cta { display: inline-flex; }
+  .topbar .menu-toggle { display: none; }
 }
 
 .hero-title { position: relative; z-index: 1; margin-top: clamp(14px, 2.4vw, 30px); text-align: center; font-size: clamp(44px, min(9.4vw, 12.6svh), 132px); line-height: .9; letter-spacing: -.035em; color: var(--forest); font-weight: 650; }
@@ -185,20 +193,20 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .float-mark span { font-family: var(--font-display), serif; font-size: 21px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
 .float-mark small { margin-top: 2px; font-size: 9.5px; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: var(--text-soft); }
 .float-links { display: none; gap: 28px; margin-inline: auto; font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--forest); }
-.float-bar .menu-toggle { margin-left: auto; width: 42px; height: 42px; }
-.float-cta { display: none; min-height: 42px; }
-.float-cta .btn-icon { width: 30px; height: 30px; }
-@media (min-width: 1024px) { .float-links, .float-cta { display: flex; } .float-bar .menu-toggle { display: none; } }
+.float-bar .menu-toggle { margin-left: auto; min-height: 40px; }
+.nav-cta.float-cta { min-height: 40px; }
+@media (min-width: 1024px) { .float-links, .nav-cta.float-cta { display: flex; } .float-bar .menu-toggle { display: none; } }
 @media (prefers-reduced-motion: no-preference) { .float-bar { animation: drop .45s var(--ease) both; } }
 @keyframes drop { from { opacity: 0; transform: translate(-50%, -24px); } }
-.mobile-panel { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; padding: 18px var(--gutter) 32px; overflow-y: auto; background: var(--forest); }
-.mobile-panel-top { display: flex; justify-content: space-between; align-items: center; }
-.mobile-panel-top .menu-toggle { background: var(--gold); color: var(--ink-deep); }
-.mobile-panel nav { display: grid; gap: 4px; margin-block: auto; padding-block: 40px; }
-.mobile-panel nav a { font-family: var(--font-display), serif; font-size: clamp(36px, 10vw, 56px); font-weight: 550; line-height: 1.25; }
-.mobile-panel-foot { display: grid; gap: 18px; justify-items: start; color: var(--on-dark-soft); font-size: 15px; }
-.mobile-panel .botanical { right: -20px; bottom: 120px; width: 160px; color: var(--gold); opacity: .3; }
-.mobile-panel .eyebrow::before { background: var(--gold); }
+.mobile-panel { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; padding: 18px var(--gutter) 32px; overflow-x: hidden; overflow-y: auto; background: var(--forest); }
+.mobile-panel-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid color-mix(in srgb, var(--ivory) 16%, transparent); }
+.panel-logo { width: 104px; --logo-color: var(--ivory); }
+.panel-close { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--gold); color: var(--ink-deep); }
+.mobile-panel nav { display: grid; margin-block: auto; padding-block: 32px; }
+.mobile-panel nav a { display: flex; align-items: baseline; gap: 14px; padding-block: 12px; border-bottom: 1px solid color-mix(in srgb, var(--ivory) 12%, transparent); font-family: var(--font-display), serif; font-size: clamp(32px, 9vw, 48px); line-height: 1.1; }
+.mobile-panel nav a small { font-family: var(--font-body), sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--gold); }
+.mobile-panel-foot { position: relative; z-index: 1; display: grid; gap: 16px; justify-items: start; color: var(--on-dark-soft); font-size: 15px; }
+.mobile-panel .botanical { right: -20px; bottom: 110px; width: 150px; color: var(--gold); opacity: .25; }
 
 /* ── Luk pića + tamna sekcija ─────────────────────────────────────── */
 .dark-torn {
@@ -423,8 +431,8 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .footer-col a:hover { color: var(--ivory); text-decoration: underline; text-underline-offset: 4px; }
 .footer-social { display: inline-flex; align-items: center; gap: 10px; }
 .footer-brand { position: relative; z-index: 1; display: grid; justify-items: center; gap: 20px; padding-block: clamp(32px, 4vw, 48px) clamp(24px, 3vw, 36px); border-top: 1px solid color-mix(in srgb, var(--ivory) 16%, transparent); }
-.footer-logo { display: grid; place-items: center; width: clamp(128px, 15vw, 210px); aspect-ratio: 1.22; padding: 8%; border-radius: 50%; background: var(--ivory); box-shadow: 0 0 0 6px color-mix(in srgb, var(--gold) 55%, transparent); }
-.footer-logo img { width: 100%; height: auto; }
+.footer-logo { display: block; width: clamp(190px, 22vw, 300px); --logo-color: var(--white); transition: opacity .25s; }
+.footer-logo:hover { opacity: .85; }
 .footer-wordmark { display: grid; gap: 14px; width: 100%; }
 .footer-wordmark svg { width: 100%; height: auto; overflow: visible; }
 .footer-wordmark text { font-family: var(--font-display), Georgia, serif; font-size: 262px; font-weight: 600; fill: var(--ivory); }
