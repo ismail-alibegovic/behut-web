@@ -1,6 +1,22 @@
-import { Header, FeaturedDrinks, CafeMenu, Gallery } from '@/components/cafe-interactive'
-import { Hero, Story, InstagramSection, LocationAndFooter } from '@/components/cafe-sections'
+import { Hero } from '@/components/hero'
+import { DrinkShowcase } from '@/components/drink-showcase'
+import { MenuGrid } from '@/components/menu-grid'
+import { Gallery } from '@/components/gallery'
+import { CtaStrip, Story, InstagramSection, Location, Footer } from '@/components/sections'
 
 export default function Page() {
-  return <><a className="skip-link" href="#main">Preskoči na sadržaj</a><Header /><main id="main"><Hero /><FeaturedDrinks /><Story /><CafeMenu /><Gallery /><InstagramSection /><LocationAndFooter /></main></>
+  return <>
+    <a className="skip-link" href="#main">Preskoči na sadržaj</a>
+    <Hero />
+    <main id="main" tabIndex={-1}>
+      <DrinkShowcase />
+      <MenuGrid />
+      <CtaStrip />
+      <Story />
+      <Gallery />
+      <InstagramSection />
+      <Location />
+    </main>
+    <Footer />
+  </>
 }

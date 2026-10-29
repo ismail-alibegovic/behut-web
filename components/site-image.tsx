@@ -1,8 +1,8 @@
+import Image from 'next/image'
 import type { SiteImage as ImageConfig } from '@/data/site-config'
 
-export function SiteImage({ image, className = '', priority = false, aspectRatio }: { image: ImageConfig; className?: string; priority?: boolean; aspectRatio?: string }) {
-  return <picture className={`site-photo ${className}`} style={{ aspectRatio: aspectRatio ?? image.aspectRatio }}>
-    {image.mobileSrc && <source media="(max-width: 640px)" srcSet={image.mobileSrc} />}
-    <img src={image.src} alt={image.alt} loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} decoding="async" style={{ objectPosition: image.position ?? 'center', objectFit: image.fit ?? 'cover' }} />
-  </picture>
+export function SiteImage({ image, className = '', priority = false, sizes = '100vw' }: { image: ImageConfig; className?: string; priority?: boolean; sizes?: string }) {
+  return <span className={`site-photo ${className}`}>
+    <Image src={image.src} alt={image.alt} fill sizes={sizes} priority={priority} style={{ objectPosition: image.position ?? 'center', objectFit: image.fit ?? 'cover' }} />
+  </span>
 }
