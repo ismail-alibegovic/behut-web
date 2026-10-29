@@ -4,6 +4,8 @@ import { images, siteConfig } from '@/data/site-config'
 import { SiteImage } from './site-image'
 import { BlossomBranch, LeafSprig, SingleBlossom } from './botanical'
 import PolaroidLineCarousel from './ui/polaroid-line-carousel'
+import { ReviewStack } from './ui/review-stack'
+import { reviewSummary, reviews } from '@/data/reviews'
 
 const mapsLabel = <span className="sr-only"> (otvara Google Maps)</span>
 
@@ -52,6 +54,25 @@ export function Story() {
   </section>
 }
 
+export function Reviews() {
+  // Bez upisanih recenzija sekcija se ne prikazuje (nikad izmišljene).
+  if (!reviews.length) return null
+  return <section id="recenzije" className="section reviews" aria-labelledby="recenzije-title" tabIndex={-1}>
+    <div className="wrap reviews-grid">
+      <div className="reviews-intro reveal">
+        <span className="eyebrow">Google recenzije</span>
+        <h2 id="recenzije-title">Šta kažu gosti.</h2>
+        <a className="reviews-score" href={siteConfig.maps} target="_blank" rel="noreferrer">
+          <strong>{reviewSummary.rating.toFixed(1).replace('.', ',')}</strong>
+          <span>od 5 · {reviewSummary.count} recenzija na Google Maps <ArrowUpRight size={15} aria-hidden="true" /></span>
+          {mapsLabel}
+        </a>
+      </div>
+      <ReviewStack reviews={reviews} href={siteConfig.maps} />
+    </div>
+  </section>
+}
+
 export function InstagramSection() {
   const reels = siteConfig.instagramReels
   return <section id="instagram" className="section" aria-labelledby="instagram-title" tabIndex={-1}>
@@ -71,20 +92,33 @@ export function InstagramSection() {
 
 export function Location() {
   return <section id="lokacija" className="section" aria-labelledby="lokacija-title" tabIndex={-1}>
-    <div className="wrap location-grid">
-      <div className="location-card reveal">
+    <div className="wrap">
+      <div className="section-head reveal">
         <span className="eyebrow">Lokacija</span>
-        <h2 id="lokacija-title">Vidimo se <em>na Kovačima.</em></h2>
-        <address><MapPin size={22} aria-hidden="true" /><span>Kovači 20<br />71000 Sarajevo, Bosna i Hercegovina</span></address>
-        {(siteConfig.openingHours || siteConfig.phone) && <div className="location-details">
-          {siteConfig.openingHours && <p>{siteConfig.openingHours}</p>}
-          {siteConfig.phone && <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>}
-        </div>}
-        <div><a className="btn btn-forest" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span>{mapsLabel}</a></div>
-        <LeafSprig />
+        <h2 id="lokacija-title">Vidimo se na Kovačima.</h2>
       </div>
-      <div className="map-frame reveal">
-        <iframe src={siteConfig.mapsEmbed} title="Mapa: Behut, Kovači 20, Sarajevo" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+      <div className="location-grid">
+        <div className="gilded reveal">
+          <div className="gilded-inner">
+            <BlossomBranch className="gilded-branch" />
+            <span className="gilded-name">Behut Coffee shop</span>
+            <address><MapPin size={20} aria-hidden="true" /><span>Kovači 20<br />71000 Sarajevo<br />Bosna i Hercegovina</span></address>
+            {(siteConfig.openingHours || siteConfig.phone) && <div className="location-details">
+              {siteConfig.openingHours && <p>{siteConfig.openingHours}</p>}
+              {siteConfig.phone && <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>}
+            </div>}
+            <a className="btn btn-forest" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span>{mapsLabel}</a>
+          </div>
+          <Image className="frame-img" src="/images/frames/gilded-frame.webp" alt="" width={648} height={777} sizes="(min-width: 900px) 420px, 90vw" />
+        </div>
+        <div className="ornate reveal">
+          <div className="ornate-map">
+            <iframe src={siteConfig.mapsEmbed} title="Mapa: Behut Coffee shop, Kovači 20, Sarajevo" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+            {/* Ton mape u bojama sajta; ne prima klikove, mapa ostaje upotrebljiva. */}
+            <span className="map-tint" aria-hidden="true" />
+          </div>
+          <Image className="frame-img" src="/images/frames/ornate-frame.webp" alt="" width={735} height={511} sizes="(min-width: 900px) 760px, 100vw" />
+        </div>
       </div>
     </div>
   </section>

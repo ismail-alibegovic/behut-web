@@ -14,8 +14,9 @@ export const siteConfig = {
   name: 'BEHUT Sarajevo',
   instagram: 'https://www.instagram.com/behut_cafe/',
   address: 'Kovači 20, 71000 Sarajevo, Bosnia and Herzegovina',
-  maps: 'https://www.google.com/maps/search/?api=1&query=Kova%C4%8Di%2020%2C%2071000%20Sarajevo%2C%20Bosnia%20and%20Herzegovina',
-  mapsEmbed: 'https://www.google.com/maps?q=Kova%C4%8Di%2020%2C%2071000%20Sarajevo&z=17&output=embed',
+  // Google Maps profil "Behut Coffee shop" (43.8602721, 18.4322111).
+  maps: 'https://maps.app.goo.gl/CyjTezFVSEwX47Z27',
+  mapsEmbed: 'https://www.google.com/maps?q=Behut+Coffee+shop,+Kova%C4%8Di+20,+Sarajevo&ll=43.8602721,18.4322111&z=17&output=embed',
   openingHours: null as string | null,
   phone: null as string | null,
   menuPdf: null as string | null,

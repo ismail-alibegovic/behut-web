@@ -2,7 +2,7 @@ import { Hero } from '@/components/hero'
 import { DrinkShowcase } from '@/components/drink-showcase'
 import { MenuGrid } from '@/components/menu-grid'
 import { Gallery } from '@/components/gallery'
-import { CtaStrip, Story, InstagramSection, Location, Footer } from '@/components/sections'
+import { CtaStrip, Story, Reviews, InstagramSection, Location, Footer } from '@/components/sections'
 
 export default function Page() {
   return <>
@@ -13,6 +13,7 @@ export default function Page() {
       <MenuGrid />
       <CtaStrip />
       <Story />
+      <Reviews />
       <Gallery />
       <InstagramSection />
       <Location />
