@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowUpRight, MapPin, Menu, X } from 'lucide-react'
 import { siteConfig } from '@/data/site-config'
+import { dict, paths, type Locale } from '@/lib/i18n'
 import { LeafSprig } from './botanical'
 import { LogoMark } from './logo-mark'
 
-const leftLinks = [{ href: '#meni', label: 'Meni' }, { href: '#prica', label: 'Naša priča' }, { href: '#galerija', label: 'Galerija' }]
-const rightLinks = [{ href: '#lokacija', label: 'Lokacija' }]
-const allLinks = [...leftLinks, ...rightLinks]
+// Sidra sekcija su ista na oba jezika; tekst dolazi iz rječnika.
+const leftKeys = [['#meni', 'menu'], ['#prica', 'story'], ['#galerija', 'gallery']] as const
+const rightKeys = [['#lokacija', 'location']] as const
 
 /** Prati koja je sekcija trenutno na sredini ekrana, za aktivni link. */
 function useActiveSection(hrefs: string[]) {
@@ -28,9 +29,14 @@ function useActiveSection(hrefs: string[]) {
   return active
 }
 
-const hrefs = allLinks.map(link => link.href)
+const hrefs = [...leftKeys, ...rightKeys].map(([href]) => href)
 
-export function Topbar() {
+export function Topbar({ locale }: { locale: Locale }) {
+  const t = dict[locale]
+  const other: Locale = locale === 'bs' ? 'en' : 'bs'
+  const leftLinks = leftKeys.map(([href, key]) => ({ href, label: t.nav[key] }))
+  const rightLinks = rightKeys.map(([href, key]) => ({ href, label: t.nav[key] }))
+  const allLinks = [...leftLinks, ...rightLinks]
   const [open, setOpen] = useState(false)
   const [floating, setFloating] = useState(false)
   const header = useRef<HTMLElement>(null)
@@ -78,33 +84,39 @@ export function Topbar() {
     }
   }, [open])
 
-  const mapsCta = (className = '') => <a className={`nav-cta ${className}`} href={siteConfig.maps} target="_blank" rel="noreferrer"><MapPin size={16} aria-hidden="true" />Kako do nas<span className="sr-only"> (otvara Google Maps)</span></a>
-  const menuButton = <button className="menu-toggle" aria-expanded={open} aria-controls="mobilni-meni" onClick={openPanel}><span>Meni</span><Menu size={18} aria-hidden="true" /></button>
+  const mapsCta = (className = '') => <a className={`nav-cta ${className}`} href={siteConfig.maps} target="_blank" rel="noreferrer"><MapPin size={16} aria-hidden="true" />{t.directions}<span className="sr-only">{t.opensMaps}</span></a>
+  const menuButton = <button className="menu-toggle" aria-expanded={open} aria-controls="mobilni-meni" onClick={openPanel}><span>{t.nav.openMenu}</span><Menu size={18} aria-hidden="true" /></button>
+  const langSwitch = (className = '') => <a className={`lang-switch ${className}`} href={paths.home[other]} hrefLang={other} lang={other} aria-label={t.nav.switchLabel}>{other.toUpperCase()}</a>
 
   return <header ref={header} className="topbar">
-    <nav className="topbar-links" aria-label="Glavna navigacija">{leftLinks.map(navLink)}</nav>
-    <a href="#" className="topbar-logo" aria-label="BEHUT Sarajevo, na vrh stranice"><LogoMark /></a>
+    <nav className="topbar-links" aria-label={t.nav.main}>{leftLinks.map(navLink)}</nav>
+    <a href="#" className="topbar-logo" aria-label={t.toTop}><LogoMark /></a>
     <div className="topbar-right">
-      <nav className="topbar-links" aria-label="Dodatna navigacija">{rightLinks.map(navLink)}</nav>
+      <nav className="topbar-links" aria-label={t.nav.extra}>{rightLinks.map(navLink)}</nav>
+      {langSwitch()}
       {mapsCta('topbar-cta')}
       {menuButton}
     </div>
     {floating && createPortal(<div className="float-bar">
-      <a href="#" className="float-mark" aria-label="BEHUT Sarajevo, na vrh stranice"><span>Behut</span><small>Sarajevo</small></a>
-      <nav className="float-links" aria-label="Brza navigacija">{allLinks.map(navLink)}</nav>
+      <a href="#" className="float-mark" aria-label={t.toTop}><span>Behut</span><small>Sarajevo</small></a>
+      <nav className="float-links" aria-label={t.nav.quick}>{allLinks.map(navLink)}</nav>
+      {langSwitch('float-lang')}
       {mapsCta('float-cta')}
       {menuButton}
     </div>, document.body)}
-    {open && createPortal(<div ref={panel} id="mobilni-meni" className="mobile-panel on-dark beans" role="dialog" aria-modal="true" aria-label="Navigacija">
+    {open && createPortal(<div ref={panel} id="mobilni-meni" className="mobile-panel on-dark beans" role="dialog" aria-modal="true" aria-label={t.nav.panel} lang={locale}>
       <div className="mobile-panel-top">
         <LogoMark className="panel-logo" />
-        <button className="panel-close" aria-label="Zatvori navigaciju" onClick={() => setOpen(false)}><X size={22} aria-hidden="true" /></button>
+        <button className="panel-close" aria-label={t.nav.close} onClick={() => setOpen(false)}><X size={22} aria-hidden="true" /></button>
       </div>
-      <nav aria-label="Mobilna navigacija">{[...allLinks, { href: '#instagram', label: 'Instagram' }].map((link, index) => <a key={link.href} href={link.href} onClick={event => { event.preventDefault(); pending.current = link.href; history.replaceState(null, '', link.href); setOpen(false) }}><small>{String(index + 1).padStart(2, '0')}</small>{link.label}</a>)}</nav>
+      <nav aria-label={t.nav.mobile}>{[...allLinks, { href: '#instagram', label: t.nav.instagram }].map((link, index) => <a key={link.href} href={link.href} onClick={event => { event.preventDefault(); pending.current = link.href; history.replaceState(null, '', link.href); setOpen(false) }}><small>{String(index + 1).padStart(2, '0')}</small>{link.label}</a>)}</nav>
       <div className="mobile-panel-foot">
-        <span>Kovači 20, 71000 Sarajevo</span>
+        <span>{t.nav.address}</span>
         {mapsCta('nav-cta-gold')}
-        <a className="text-link" href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={15} aria-hidden="true" /></a>
+        <div className="panel-row">
+          <a className="text-link" href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={15} aria-hidden="true" /></a>
+          <a className="text-link" href={paths.home[other]} hrefLang={other} lang={other}>{t.nav.switchTo}</a>
+        </div>
       </div>
       <LeafSprig />
     </div>, document.body)}

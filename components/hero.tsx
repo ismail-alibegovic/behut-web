@@ -1,27 +1,29 @@
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
-import { siteConfig } from '@/data/site-config'
+import { localize, siteConfig } from '@/data/site-config'
+import { dict, type Locale } from '@/lib/i18n'
 import { SiteImage } from './site-image'
 import { Topbar } from './topbar'
 import { BlossomBranch, LeafSprig, SingleBlossom } from './botanical'
 
-export function Hero() {
+export function Hero({ locale }: { locale: Locale }) {
+  const t = dict[locale]
   return <section className="hero" aria-labelledby="hero-title">
-    <div className="hero-backdrop"><SiteImage image={{ ...siteConfig.hero.backdrop, alt: '' }} priority sizes="100vw" /></div>
+    <div className="hero-backdrop"><SiteImage image={{ ...localize(siteConfig.hero.backdrop, locale), alt: '' }} priority sizes="100vw" /></div>
     <div className="hero-card">
       <span className="hero-beans" aria-hidden="true" />
       <BlossomBranch className="hero-branch" />
       <LeafSprig className="hero-sprig" />
       <SingleBlossom className="hero-blossom" />
-      <Topbar />
-      <h1 id="hero-title" className="hero-title"><span>Gdje si?</span> <span><em>U Behutu!</em></span></h1>
+      <Topbar locale={locale} />
+      <h1 id="hero-title" className="hero-title"><span>{t.hero.line1}</span> <span><em>{t.hero.line2}</em></span></h1>
       <div className="hero-fan">
-        {siteConfig.hero.fan.map(image => <figure key={image.src} className="fan-card"><SiteImage image={image} priority sizes="(min-width: 1200px) 320px, 30vw" /></figure>)}
+        {siteConfig.hero.fan.map(image => <figure key={image.src} className="fan-card"><SiteImage image={localize(image, locale)} priority sizes="(min-width: 1200px) 320px, 30vw" /></figure>)}
       </div>
       <div className="hero-foot">
-        <p>Jedna sarajevska adresa na Kovačima. Hiljadu razloga da ostaneš još malo.</p>
+        <p>{t.hero.lead}</p>
         <div className="hero-actions">
-          <a className="btn btn-forest" href="#meni">Pogledaj meni<span className="btn-icon"><ArrowDownRight size={17} aria-hidden="true" /></span></a>
-          <a className="btn btn-ghost" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas <ArrowUpRight size={17} aria-hidden="true" /><span className="sr-only"> (otvara Google Maps)</span></a>
+          <a className="btn btn-forest" href="#meni">{t.hero.cta}<span className="btn-icon"><ArrowDownRight size={17} aria-hidden="true" /></span></a>
+          <a className="btn btn-ghost" href={siteConfig.maps} target="_blank" rel="noreferrer">{t.directions} <ArrowUpRight size={17} aria-hidden="true" /><span className="sr-only">{t.opensMaps}</span></a>
         </div>
       </div>
     </div>

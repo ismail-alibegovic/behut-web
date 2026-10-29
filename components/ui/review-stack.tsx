@@ -3,6 +3,7 @@
 import { useState, type CSSProperties } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import type { Review } from '@/data/reviews'
+import { dict, type Locale } from '@/lib/i18n'
 
 /*
  * Na osnovu dostavljene "twitter testimonial cards" komponente: nagnute
@@ -28,13 +29,14 @@ function GoogleMark() {
   </svg>
 }
 
-function Stars({ rating }: { rating: number }) {
-  return <span className="review-stars" role="img" aria-label={`Ocjena ${rating} od 5`}>
+function Stars({ rating, label }: { rating: number; label: string }) {
+  return <span className="review-stars" role="img" aria-label={label}>
     {[1, 2, 3, 4, 5].map(i => <svg key={i} viewBox="0 0 20 20" aria-hidden="true" data-on={i <= Math.round(rating)}><path d="m10 1.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8L10 1.6Z" /></svg>)}
   </span>
 }
 
-export function ReviewStack({ reviews, href }: { reviews: Review[]; href: string }) {
+export function ReviewStack({ reviews, href, locale }: { reviews: Review[]; href: string; locale: Locale }) {
+  const t = dict[locale].reviews
   const [start, setStart] = useState(0)
   const [hovered, setHovered] = useState<number | null>(null)
   const [active, setActive] = useState<number | null>(null)
@@ -66,19 +68,19 @@ export function ReviewStack({ reviews, href }: { reviews: Review[]; href: string
             <span className="review-avatar" aria-hidden="true">{review.avatar ? <img src={review.avatar} alt="" /> : review.author.charAt(0)}</span>
             <span className="review-who">
               <strong>{review.author}</strong>
-              {review.rating !== undefined && <Stars rating={review.rating} />}
+              {review.rating !== undefined && <Stars rating={review.rating} label={t.ratingOf(review.rating)} />}
             </span>
             <GoogleMark />
           </span>
-          <span className="review-text" lang={review.lang}>{review.text}</span>
-          <span className="review-foot">{review.date && <span>{review.date}</span>}<span>Google recenzija</span></span>
+          {locale === 'en' && review.textEn ? <span className="review-text" lang="en">{review.textEn}</span> : <span className="review-text" lang={review.lang ?? 'bs'}>{review.text}</span>}
+          <span className="review-foot">{review.date && <span>{review.date}</span>}<span>{t.google}</span></span>
         </a>
       })}
     </div>
     {n > 1 && <div className="review-controls">
-      <button className="round-btn" onClick={() => rotate(-1)} aria-label="Prethodna recenzija"><ArrowLeft size={18} aria-hidden="true" /></button>
+      <button className="round-btn" onClick={() => rotate(-1)} aria-label={t.prev}><ArrowLeft size={18} aria-hidden="true" /></button>
       <span aria-live="polite">{String(start + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}</span>
-      <button className="round-btn" onClick={() => rotate(1)} aria-label="Sljedeća recenzija"><ArrowRight size={18} aria-hidden="true" /></button>
+      <button className="round-btn" onClick={() => rotate(1)} aria-label={t.next}><ArrowRight size={18} aria-hidden="true" /></button>
     </div>}
   </div>
 }

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { ArrowUpRight, Camera, Lamp, MapPin, Sun } from 'lucide-react'
-import { images, siteConfig } from '@/data/site-config'
+import { images, localize, siteConfig } from '@/data/site-config'
+import { dict, tr, type Locale } from '@/lib/i18n'
 import { SiteImage } from './site-image'
 import { BlossomBranch, LeafSprig, SingleBlossom } from './botanical'
 import PolaroidLineCarousel from './ui/polaroid-line-carousel'
@@ -9,46 +10,47 @@ import { ReviewStack } from './ui/review-stack'
 import { RateUs } from './ui/rate-us'
 import { reviewSummary, reviews } from '@/data/reviews'
 
-const mapsLabel = <span className="sr-only"> (otvara Google Maps)</span>
 
-export function CtaStrip() {
+export function CtaStrip({ locale }: { locale: Locale }) {
+  const t = dict[locale]
   return <section className="cta-strip dark-torn on-dark beans" aria-labelledby="cta-title">
     <BlossomBranch className="cta-branch" />
     <LeafSprig className="cta-sprig" />
     <div className="wrap">
-      <span className="eyebrow">Kovači 20, Sarajevo</span>
-      <h2 id="cta-title">Kafa je na putu? <em>Svrati na Kovače.</em></h2>
-      <p>Bez žurbe, bez povoda. Sjedi, naruči i ostani još malo.</p>
-      <a className="btn btn-gold" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span>{mapsLabel}</a>
+      <span className="eyebrow">{t.cta.eyebrow}</span>
+      <h2 id="cta-title">{t.cta.title} <em>{t.cta.titleEm}</em></h2>
+      <p>{t.cta.lead}</p>
+      <a className="btn btn-gold" href={siteConfig.maps} target="_blank" rel="noreferrer">{t.directions}<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span><span className="sr-only">{t.opensMaps}</span></a>
       <ul className="cta-points">
-        <li><MapPin size={20} aria-hidden="true" />U srcu Sarajeva</li>
-        <li><Sun size={20} aria-hidden="true" />Terasa s pogledom</li>
-        <li><Lamp size={20} aria-hidden="true" />Vintage ambijent</li>
+        <li><MapPin size={20} aria-hidden="true" />{t.cta.points[0]}</li>
+        <li><Sun size={20} aria-hidden="true" />{t.cta.points[1]}</li>
+        <li><Lamp size={20} aria-hidden="true" />{t.cta.points[2]}</li>
       </ul>
     </div>
   </section>
 }
 
-export function Story() {
+export function Story({ locale }: { locale: Locale }) {
+  const t = dict[locale].story
   return <section id="prica" className="section" aria-labelledby="prica-title" tabIndex={-1}>
     <div className="wrap story-grid">
-      <h2 id="prica-title" className="story-title reveal"><span>Više od</span> <span>kafe.</span></h2>
+      <h2 id="prica-title" className="story-title reveal"><span>{t.title1}</span> <span>{t.title2}</span></h2>
       <div className="story-media reveal">
         <BlossomBranch className="story-branch" />
         <figure className="story-frame">
-          <span className="story-photo"><SiteImage image={images.interior} sizes="(min-width: 900px) 420px, 70vw" /></span>
+          <span className="story-photo"><SiteImage image={localize(images.interior, locale)} sizes="(min-width: 900px) 420px, 70vw" /></span>
           <Image className="story-frame-img" src="/images/frames/green-frame.webp" alt="" width={576} height={768} sizes="(min-width: 900px) 540px, 90vw" />
         </figure>
         <LeafSprig className="story-sprig" />
         <SingleBlossom className="story-blossom" />
       </div>
       <div className="story-copy reveal">
-        <h3>Dobrodošli u kafić Behut!</h3>
-        <p>U srcu naše čaršije, gdje miris svježe kafe susreće duh tradicije, otvorili smo vrata mjesta gdje ste uvijek među svojima. Ovdje se kafa ne pije na brzinu – ona se ćejfi, uz priču, osmijeh i toplu dobrodošlicu.</p>
-        <p>Bilo da ste na prolazu ili ste dio naše raje, kod nas ste uvijek kući. Neka vam svaki gutljaj bude rahatluk, a svaka posjeta razlog da se opet vratite.</p>
-        <p className="story-sign">Dobro nam došli!</p>
+        <h3>{t.heading}</h3>
+        <p>{t.p1}</p>
+        <p>{t.p2}</p>
+        <p className="story-sign">{t.sign}</p>
         <div className="story-facts">
-          <div><strong>2024</strong><span>otvorili smo vrata</span></div>
+          <div><strong>2024</strong><span>{t.opened}</span></div>
           <div><strong>Kovači 20</strong><span>Sarajevo</span></div>
         </div>
       </div>
@@ -56,67 +58,70 @@ export function Story() {
   </section>
 }
 
-export function Reviews() {
+export function Reviews({ locale }: { locale: Locale }) {
+  const t = dict[locale]
   // Bez upisanih recenzija sekcija se ne prikazuje (nikad izmišljene).
   if (!reviews.length) return null
   return <section id="recenzije" className="section reviews" aria-labelledby="recenzije-title" tabIndex={-1}>
     <div className="wrap reviews-grid">
       <div className="reviews-intro reveal">
-        <span className="eyebrow">Google recenzije</span>
-        <h2 id="recenzije-title">Šta kažu gosti.</h2>
+        <span className="eyebrow">{t.reviews.eyebrow}</span>
+        <h2 id="recenzije-title">{t.reviews.title}</h2>
         <a className="reviews-score" href={siteConfig.maps} target="_blank" rel="noreferrer">
-          <strong>{reviewSummary.rating.toFixed(1).replace('.', ',')}</strong>
-          <span>od 5 · {reviewSummary.count} recenzija na Google Maps <ArrowUpRight size={15} aria-hidden="true" /></span>
-          {mapsLabel}
+          <strong>{locale === 'bs' ? reviewSummary.rating.toFixed(1).replace('.', ',') : reviewSummary.rating.toFixed(1)}</strong>
+          <span>{t.reviews.of(reviewSummary.count)} <ArrowUpRight size={15} aria-hidden="true" /></span>
+          <span className="sr-only">{t.opensMaps}</span>
         </a>
-        <RateUs href={siteConfig.maps} />
+        <RateUs href={siteConfig.maps} locale={locale} />
       </div>
-      <ReviewStack reviews={reviews} href={siteConfig.maps} />
+      <ReviewStack reviews={reviews} href={siteConfig.maps} locale={locale} />
     </div>
   </section>
 }
 
-export function InstagramSection() {
-  const reels = siteConfig.instagramReels
+export function InstagramSection({ locale }: { locale: Locale }) {
+  const t = dict[locale]
+  const reels = siteConfig.instagramReels.map(reel => ({ reel: reel.reel, title: tr(reel.title, locale), caption: reel.caption && tr(reel.caption, locale), featured: reel.featured }))
   return <section id="instagram" className="section" aria-labelledby="instagram-title" tabIndex={-1}>
     <div className="wrap">
       <div className="section-head insta-head reveal">
-        <span className="eyebrow">Trenutke ne brojimo. Čuvamo ih.</span>
-        <h2 id="instagram-title"><a href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={44} aria-hidden="true" /><span className="sr-only"> (otvara Instagram)</span></a></h2>
-        <p>Malo offline, malo na feedu. Povuci konopac ili klikni fotku.</p>
+        <span className="eyebrow">{t.instagram.eyebrow}</span>
+        <h2 id="instagram-title"><a href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={44} aria-hidden="true" /><span className="sr-only">{t.opensInstagram}</span></a></h2>
+        <p>{t.instagram.lead}</p>
       </div>
     </div>
-    <PolaroidLineCarousel slides={reels} initialIndex={Math.max(0, reels.findIndex(reel => reel.featured))} height="clamp(620px, 52vw, 720px)" ariaLabel="Behut reelovi s Instagrama" />
+    <PolaroidLineCarousel slides={reels} initialIndex={Math.max(0, reels.findIndex(reel => reel.featured))} height="clamp(620px, 52vw, 720px)" ariaLabel={t.instagram.carousel} locale={locale} />
     <div className="wrap">
-      <div className="insta-cta"><a className="btn btn-ghost" href={siteConfig.instagram} target="_blank" rel="noreferrer">Prati nas na Instagramu <Camera size={17} aria-hidden="true" /><span className="sr-only"> (otvara Instagram)</span></a></div>
+      <div className="insta-cta"><a className="btn btn-ghost" href={siteConfig.instagram} target="_blank" rel="noreferrer">{t.instagram.follow} <Camera size={17} aria-hidden="true" /><span className="sr-only">{t.opensInstagram}</span></a></div>
     </div>
   </section>
 }
 
-export function Location() {
+export function Location({ locale }: { locale: Locale }) {
+  const t = dict[locale]
   return <section id="lokacija" className="section" aria-labelledby="lokacija-title" tabIndex={-1}>
     <div className="wrap">
       <div className="section-head reveal">
-        <span className="eyebrow">Lokacija</span>
-        <h2 id="lokacija-title">Vidimo se na Kovačima.</h2>
+        <span className="eyebrow">{t.location.eyebrow}</span>
+        <h2 id="lokacija-title">{t.location.title}</h2>
       </div>
       <div className="location-grid">
         <div className="gilded reveal">
           <div className="gilded-inner">
             <BlossomBranch className="gilded-branch" />
             <span className="gilded-name">Behut Coffee shop</span>
-            <address><MapPin size={20} aria-hidden="true" /><span>Kovači 20<br />71000 Sarajevo<br />Bosna i Hercegovina</span></address>
+            <address><MapPin size={20} aria-hidden="true" /><span>Kovači 20<br />71000 Sarajevo<br />{t.location.country}</span></address>
             {(siteConfig.openingHours || siteConfig.phone) && <div className="location-details">
-              {siteConfig.openingHours && <p>{siteConfig.openingHours}</p>}
+              {siteConfig.openingHours && <p>{tr(siteConfig.openingHours, locale)}</p>}
               {siteConfig.phone && <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>}
             </div>}
-            <a className="btn btn-forest" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span>{mapsLabel}</a>
+            <a className="btn btn-forest" href={siteConfig.maps} target="_blank" rel="noreferrer">{t.directions}<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span><span className="sr-only">{t.opensMaps}</span></a>
           </div>
           <Image className="frame-img" src="/images/frames/gilded-frame.webp" alt="" width={648} height={777} sizes="(min-width: 900px) 420px, 90vw" />
         </div>
         <div className="ornate reveal">
           <div className="ornate-map">
-            <iframe src={siteConfig.mapsEmbed} title="Mapa: Behut Coffee shop, Kovači 20, Sarajevo" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+            <iframe src={siteConfig.mapsEmbed} title={t.location.map} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
             {/* Ton mape u bojama sajta; ne prima klikove, mapa ostaje upotrebljiva. */}
             <span className="map-tint" aria-hidden="true" />
           </div>
@@ -127,45 +132,46 @@ export function Location() {
   </section>
 }
 
-export function Footer() {
+export function Footer({ locale }: { locale: Locale }) {
+  const t = dict[locale]
   return <footer className="footer on-dark beans">
     <BlossomBranch />
     <div className="wrap footer-top">
       <div className="footer-intro">
-        <p className="footer-tag">Dobra kafa. Dobri ljudi. <em>To je Behut.</em></p>
-        <a className="btn btn-gold" href={siteConfig.maps} target="_blank" rel="noreferrer">Kako do nas<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span>{mapsLabel}</a>
+        <p className="footer-tag">{t.footer.tag} <em>{t.footer.tagEm}</em></p>
+        <a className="btn btn-gold" href={siteConfig.maps} target="_blank" rel="noreferrer">{t.directions}<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span><span className="sr-only">{t.opensMaps}</span></a>
       </div>
       <div className="footer-col">
-        <h2>Posjeti nas</h2>
-        <a href={siteConfig.maps} target="_blank" rel="noreferrer">Kovači 20<br />71000 Sarajevo{mapsLabel}</a>
-        {siteConfig.openingHours && <span>{siteConfig.openingHours}</span>}
+        <h2>{t.footer.visit}</h2>
+        <a href={siteConfig.maps} target="_blank" rel="noreferrer">Kovači 20<br />71000 Sarajevo<span className="sr-only">{t.opensMaps}</span></a>
+        {siteConfig.openingHours && <span>{tr(siteConfig.openingHours, locale)}</span>}
         {siteConfig.phone && <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>}
       </div>
-      <nav className="footer-col" aria-label="Linkovi u podnožju">
-        <h2>Istraži</h2>
-        <a href="#meni">Meni</a>
-        <a href="#prica">Naša priča</a>
-        <a href="#galerija">Galerija</a>
-        <a href="#lokacija">Lokacija</a>
+      <nav className="footer-col" aria-label={t.footer.links}>
+        <h2>{t.footer.explore}</h2>
+        <a href="#meni">{t.nav.menu}</a>
+        <a href="#prica">{t.nav.story}</a>
+        <a href="#galerija">{t.nav.gallery}</a>
+        <a href="#lokacija">{t.nav.location}</a>
       </nav>
       <div className="footer-col">
-        <h2>Prati nas</h2>
-        <a className="footer-social" href={siteConfig.instagram} target="_blank" rel="noreferrer"><Camera size={18} aria-hidden="true" />@behut_cafe<span className="sr-only"> (otvara Instagram)</span></a>
+        <h2>{t.footer.follow}</h2>
+        <a className="footer-social" href={siteConfig.instagram} target="_blank" rel="noreferrer"><Camera size={18} aria-hidden="true" />@behut_cafe<span className="sr-only">{t.opensInstagram}</span></a>
       </div>
     </div>
     <div className="wrap footer-brand">
-      <a href="#" className="footer-logo" aria-label="BEHUT Sarajevo, na vrh stranice"><LogoMark /></a>
+      <a href="#" className="footer-logo" aria-label={t.toTop}><LogoMark /></a>
       <div className="footer-wordmark">
         {/* textLength rasteže riječ tačno na širinu kolone, na svakom ekranu. */}
         <svg viewBox="0 0 1000 196" role="img" aria-label="Behut">
           <text x="0" y="190" textLength="1000" lengthAdjust="spacingAndGlyphs">BEHUT</text>
         </svg>
-        <span>Sarajevo · Kovači 20 · od 2024.</span>
+        <span>{t.footer.since}</span>
       </div>
     </div>
     <div className="wrap footer-bottom">
       <span>© {new Date().getFullYear()} BEHUT Sarajevo</span>
-      <a href="#">Nazad na vrh ↑</a>
+      <a href="#">{t.footer.top}</a>
     </div>
   </footer>
 }

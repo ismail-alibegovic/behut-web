@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { dict, type Locale } from "@/lib/i18n"
 
 /*
  * Polaroid Line Carousel — instant photos pegged to a sagging string. Drag the
@@ -38,6 +39,8 @@ export type PolaroidLineCarouselProps = {
   autoplay?: number
   className?: string
   ariaLabel?: string
+  /** Jezik tekstova kontrola. */
+  locale: Locale
 }
 
 // #region logic
@@ -120,8 +123,10 @@ export default function PolaroidLineCarousel({
   swing = 1,
   autoplay = 0,
   className,
-  ariaLabel = "Objave s Instagrama",
+  ariaLabel = "Instagram",
+  locale,
 }: PolaroidLineCarouselProps) {
+  const labels = { ...dict[locale].instagram, opens: dict[locale].opensInstagram }
   const n = slides.length
   const start = clamp(initialIndex, 0, Math.max(0, n - 1))
   const [active, setActive] = React.useState(start)
@@ -315,7 +320,7 @@ export default function PolaroidLineCarousel({
       style={{ height, ["--pl-cw" as string]: size.cw + "px" }}
       data-drag={dragging ? "1" : "0"}
       role="region"
-      aria-roledescription="karusel"
+      aria-roledescription="carousel"
       aria-label={ariaLabel}
       tabIndex={0}
       onKeyDown={onKey}
@@ -354,23 +359,23 @@ export default function PolaroidLineCarousel({
         <span className="pl-count" aria-hidden="true">
           <b>{pad2(active + 1)}</b> / {pad2(n)}
         </span>
-        <button type="button" className="pl-btn" aria-label="Prethodna objava" onClick={() => step(-1)}>
+        <button type="button" className="pl-btn" aria-label={labels.prev} onClick={() => step(-1)}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M10 3 5 8l5 5" stroke="currentColor" strokeWidth="1.4" />
           </svg>
         </button>
-        <button type="button" className="pl-btn" aria-label="Sljedeća objava" onClick={() => step(1)}>
+        <button type="button" className="pl-btn" aria-label={labels.next} onClick={() => step(1)}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="m6 3 5 5-5 5" stroke="currentColor" strokeWidth="1.4" />
           </svg>
         </button>
         <a className="btn btn-forest pl-open" href={reelUrl(s.reel)} target="_blank" rel="noreferrer">
-          Otvori reel<span className="btn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" strokeWidth="1.5" /></svg></span>
-          <span className="pl-sr"> {s.title} (otvara Instagram)</span>
+          {labels.open}<span className="btn-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" strokeWidth="1.5" /></svg></span>
+          <span className="pl-sr"> {s.title}{labels.opens}</span>
         </a>
       </div>
       <div className="pl-sr" aria-live="polite">
-        {"Objava " + (active + 1) + " od " + n + ": " + s.title}
+        {labels.post(active + 1, n) + s.title}
       </div>
     </div>
   )
