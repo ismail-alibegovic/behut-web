@@ -243,9 +243,8 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .showcase-visual { position: relative; width: min(86%, 360px); aspect-ratio: 700 / 903; margin-inline: auto; }
 .showcase-visual::before { content: ''; position: absolute; inset: 6% -8%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--gold) 34%, transparent), transparent); }
 .showcase-photo { position: absolute; left: 18%; top: 13.6%; width: 65%; height: 72.6%; overflow: hidden; border-radius: 50%; background: var(--green); }
-/* Ovalni okvir bi odsjekao uglove fotke: cijela fotka stoji u sredini ovala, a ostatak ovala puni ista fotka zamućena. */
-.showcase-photo-bg { position: absolute; inset: -12%; filter: blur(18px) saturate(1.1) brightness(.92); }
-.showcase-photo-fg { position: absolute; left: 14%; top: 50%; width: 72%; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 10px; box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--ink-deep) 75%, transparent), 0 0 0 3px color-mix(in srgb, var(--ivory) 70%, transparent); transform: translateY(-50%); }
+/* Fotka puni cijeli oval; blagi zum oko tačke gdje je piće drži ga u sredini okvira. */
+.showcase-photo .site-photo img { transform: scale(1.12); transform-origin: var(--focus, 50% 50%); }
 .showcase-frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 18px 24px color-mix(in srgb, var(--ink-deep) 70%, transparent)); }
 .showcase-copy { display: grid; gap: 18px; justify-items: start; }
 .showcase-copy .eyebrow { color: var(--gold); }
@@ -264,7 +263,7 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
   .showcase-visual { width: min(100%, 520px); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .showcase-photo-fg img, .showcase-copy > * { animation: rise .6s var(--ease) both; }
+  .showcase-photo, .showcase-copy > * { animation: rise .6s var(--ease) both; }
   .showcase-copy > *:nth-child(2) { animation-delay: .05s; }
   .showcase-copy > *:nth-child(3) { animation-delay: .1s; }
   .showcase-copy > *:nth-child(n + 4) { animation-delay: .15s; }
