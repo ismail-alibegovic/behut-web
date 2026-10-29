@@ -227,7 +227,7 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .showcase { position: relative; padding-top: clamp(56px, 8vw, 110px); }
 .showcase-intro { display: grid; justify-items: center; gap: 12px; margin-bottom: clamp(12px, 2vw, 24px); text-align: center; }
 .showcase-intro h2 { font-size: clamp(34px, 5vw, 64px); color: var(--forest); }
-.arc { --arc-depth: 22px; --arc-tilt: 6deg; position: relative; z-index: 2; display: flex; gap: 10px; margin-bottom: -18px; padding: 14px var(--gutter) calc(var(--arc-depth) + 16px); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); }
+.arc { --arc-depth: 14px; --arc-tilt: 4deg; position: relative; z-index: 2; display: flex; gap: 10px; margin-bottom: 4px; padding: 14px var(--gutter) calc(var(--arc-depth) + 16px); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); mask: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); }
 .arc::-webkit-scrollbar { display: none; }
 .arc li { flex: none; scroll-snap-align: center; }
 .chip { min-height: 44px; padding: 8px 20px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--forest) 22%, transparent); background: var(--ivory); color: var(--forest); font-family: var(--font-display), serif; font-size: clamp(16px, 1.5vw, 19px); font-weight: 600; white-space: nowrap; box-shadow: 0 8px 18px -12px color-mix(in srgb, var(--ink-deep) 70%, transparent); transform: translateY(calc(var(--t2) * var(--arc-depth))) rotate(calc(var(--t) * var(--arc-tilt))); transition: background-color .25s, border-color .25s, box-shadow .25s, transform .35s var(--ease); }
@@ -235,14 +235,17 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .chip[aria-pressed='true'] { background: var(--gold); border-color: var(--gold); color: var(--ink-deep); box-shadow: 0 12px 26px -12px color-mix(in srgb, var(--ink-deep) 80%, transparent); transform: translateY(calc(var(--t2) * var(--arc-depth) - 4px)) rotate(calc(var(--t) * var(--arc-tilt))) scale(1.06); }
 /* Luk od 8 chipova je širok ~1140-1290px; ispod 1360px ostaje skrolabilan red. */
 @media (min-width: 1360px) {
-  .arc { --arc-depth: 54px; --arc-tilt: 13deg; justify-content: center; gap: clamp(10px, 1.4vw, 20px); overflow: visible; margin-bottom: -42px; -webkit-mask: none; mask: none; }
+  .arc { --arc-depth: 30px; --arc-tilt: 7deg; justify-content: center; gap: clamp(10px, 1.2vw, 16px); overflow: visible; margin-bottom: 6px; -webkit-mask: none; mask: none; }
 }
 
 .showcase-dark { padding-block: calc(var(--torn) + clamp(56px, 7vw, 100px)) calc(var(--torn) + clamp(56px, 7vw, 100px)); overflow: hidden; }
 .showcase-grid { position: relative; z-index: 1; display: grid; gap: clamp(32px, 5vw, 72px); align-items: center; }
-.showcase-visual { position: relative; width: min(76%, 320px); aspect-ratio: 700 / 903; margin-inline: auto; }
+.showcase-visual { position: relative; width: min(86%, 360px); aspect-ratio: 700 / 903; margin-inline: auto; }
 .showcase-visual::before { content: ''; position: absolute; inset: 6% -8%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--gold) 34%, transparent), transparent); }
 .showcase-photo { position: absolute; left: 18%; top: 13.6%; width: 65%; height: 72.6%; overflow: hidden; border-radius: 50%; background: var(--green); }
+/* Ovalni okvir bi odsjekao uglove fotke: cijela fotka stoji u sredini ovala, a ostatak ovala puni ista fotka zamućena. */
+.showcase-photo-bg { position: absolute; inset: -12%; filter: blur(18px) saturate(1.1) brightness(.92); }
+.showcase-photo-fg { position: absolute; left: 14%; top: 50%; width: 72%; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 10px; box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--ink-deep) 75%, transparent), 0 0 0 3px color-mix(in srgb, var(--ivory) 70%, transparent); transform: translateY(-50%); }
 .showcase-frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 18px 24px color-mix(in srgb, var(--ink-deep) 70%, transparent)); }
 .showcase-copy { display: grid; gap: 18px; justify-items: start; }
 .showcase-copy .eyebrow { color: var(--gold); }
@@ -258,10 +261,10 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .showcase-dark .dark-sprig { width: clamp(90px, 10vw, 150px); right: 10px; bottom: 50px; color: var(--gold); opacity: .22; transform: rotate(-20deg); }
 @media (min-width: 900px) {
   .showcase-grid { grid-template-columns: 1fr 1fr; }
-  .showcase-visual { width: min(100%, 440px); }
+  .showcase-visual { width: min(100%, 520px); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .showcase-photo img, .showcase-copy > * { animation: rise .6s var(--ease) both; }
+  .showcase-photo-fg img, .showcase-copy > * { animation: rise .6s var(--ease) both; }
   .showcase-copy > *:nth-child(2) { animation-delay: .05s; }
   .showcase-copy > *:nth-child(3) { animation-delay: .1s; }
   .showcase-copy > *:nth-child(n + 4) { animation-delay: .15s; }
@@ -289,8 +292,8 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
   .swatch:hover { transform: translateY(-6px); box-shadow: 0 1px 0 color-mix(in srgb, var(--beige) 80%, transparent), 0 30px 40px -26px color-mix(in srgb, var(--ink-deep) 80%, transparent); }
   .swatch:hover .swatch-media img { transform: scale(1.05); }
 }
-.menu-more { display: flex; justify-content: center; margin-top: clamp(28px, 3.5vw, 44px); }
-.menu-more .btn { color: var(--forest); }
+.menu-more { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: clamp(28px, 3.5vw, 44px); }
+.menu-more .btn-ghost { color: var(--forest); }
 .menu-more svg { transition: transform .3s var(--ease); }
 .menu-cat { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-soft); }
 .menu-price { margin-top: 4px; font-family: var(--font-display), serif; font-size: 20px; color: var(--forest); }
@@ -485,34 +488,53 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .panel-row { display: flex; flex-wrap: wrap; gap: 12px 24px; }
 
 /* ── Meni za QR (/meni, /en/menu) ─────────────────────────────────── */
-.mp-head { width: min(100% - 2 * var(--gutter), 760px); margin: 0 auto; padding-top: 14px; text-align: center; }
-.mp-bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-.mp-back { justify-self: start; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--forest); }
-.mp-logo { width: 96px; --logo-color: var(--forest); }
-.mp-bar .lang-switch { justify-self: end; }
-.mp-head h1 { margin-top: clamp(20px, 4vw, 36px); font-size: clamp(52px, 12vw, 96px); color: var(--forest); }
-.mp-head > p { margin-top: 8px; color: var(--text-soft); }
-.mp-jump { position: sticky; top: 0; z-index: 5; margin-top: 20px; padding: 10px 0; background: color-mix(in srgb, var(--ivory) 92%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 1px 0 var(--line); }
-.mp-jump ul { display: flex; gap: 8px; width: min(100% - 2 * var(--gutter), 760px); margin: 0 auto; overflow-x: auto; scrollbar-width: none; }
+.mp { --mp-w: min(100% - 2 * var(--gutter), 880px); }
+.mp-hero { width: var(--mp-w); margin: 0 auto; padding-top: 14px; }
+.mp-top { display: flex; justify-content: space-between; gap: 12px; }
+.mp-pill { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; min-height: 42px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: color-mix(in srgb, var(--ivory) 80%, transparent); font-size: 13px; font-weight: 800; letter-spacing: .06em; color: var(--forest); transition: border-color .25s, background-color .25s; }
+.mp-pill:hover { border-color: var(--forest); background: var(--ivory); }
+/* Naslovna kartica kao na štampanom meniju: krem papir s dvostrukim rubom. */
+.mp-title-card { position: relative; overflow: hidden; display: grid; justify-items: center; gap: 10px; margin-top: 16px; padding: clamp(28px, 6vw, 48px) 20px clamp(24px, 5vw, 40px); border-radius: var(--radius-lg); background: var(--ivory); box-shadow: var(--shadow-soft), inset 0 0 0 8px var(--ivory), inset 0 0 0 9.5px color-mix(in srgb, var(--forest) 35%, transparent); text-align: center; }
+.mp-title-card .mp-branch { left: -26px; bottom: -14px; width: clamp(90px, 18vw, 150px); color: var(--green); opacity: .35; }
+.mp-title-card .mp-sprig { right: -6px; top: 18px; width: clamp(56px, 10vw, 90px); color: var(--green); opacity: .35; transform: rotate(18deg); }
+.mp-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--text-soft); }
+.mp-logo { width: clamp(110px, 26vw, 150px); --logo-color: var(--forest); }
+.mp-title-card h1 { font-size: clamp(56px, 14vw, 104px); line-height: .9; color: var(--forest); }
+.mp-title-card p { max-width: 34ch; color: var(--text-soft); }
+.mp-divider { width: min(240px, 70%); height: 14px; fill: var(--gold); stroke: var(--gold); stroke-width: 1.4; }
+.mp-divider path:first-child { fill: none; }
+
+.mp-jump { position: sticky; top: 0; z-index: 20; margin-top: 18px; padding: 10px 0; background: color-mix(in srgb, var(--ivory) 88%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 1px 0 var(--line), 0 10px 24px -20px color-mix(in srgb, var(--ink-deep) 60%, transparent); }
+.mp-jump ul { display: flex; gap: 8px; width: var(--mp-w); margin: 0 auto; padding: 2px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; }
 .mp-jump ul::-webkit-scrollbar { display: none; }
-.mp-jump a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--ivory); font-size: 14px; font-weight: 700; white-space: nowrap; color: var(--forest); }
+.mp-jump li { flex: none; scroll-snap-align: center; }
+@media (min-width: 900px) { .mp-jump ul { flex-wrap: wrap; justify-content: center; overflow: visible; } }
+.mp-jump a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--ivory); font-size: 14px; font-weight: 700; white-space: nowrap; color: var(--forest); transition: background-color .25s, color .25s, border-color .25s; }
 .mp-jump a:hover { border-color: var(--forest); }
-.mp-list { display: grid; gap: clamp(20px, 3vw, 28px); width: min(100% - 2 * var(--gutter), 760px); margin: clamp(20px, 3vw, 32px) auto 0; }
-.mp-cat { scroll-margin-top: 76px; padding: clamp(18px, 3vw, 28px); border-radius: var(--radius); background: color-mix(in srgb, var(--ivory) 90%, transparent); box-shadow: var(--shadow-card); }
-.mp-cat h2 { margin-bottom: 8px; font-size: clamp(28px, 5vw, 38px); color: var(--forest); }
-.mp-item { display: flex; align-items: center; gap: 14px; padding-block: 12px; border-bottom: 1px solid var(--line); }
-.mp-item:last-child { border-bottom: 0; }
-.mp-thumb { position: relative; flex: none; width: 60px; height: 60px; overflow: hidden; border-radius: 50%; background: var(--parchment); }
-.mp-thumb .menu-icon { position: absolute; inset: 20%; width: 60%; height: 60%; color: var(--green); }
-.mp-text { display: grid; gap: 3px; flex: 1; min-width: 0; }
-.mp-line { display: flex; align-items: baseline; gap: 8px; }
-.mp-line strong { font-size: 16.5px; color: var(--ink-deep); }
-.mp-dots { flex: 1; min-width: 12px; border-bottom: 2px dotted color-mix(in srgb, var(--forest) 30%, transparent); transform: translateY(-4px); }
-.mp-price { flex: none; font-family: var(--font-display), serif; font-size: 17px; color: var(--forest); }
-.mp-desc { font-size: 14px; line-height: 1.45; color: var(--text-soft); }
-.mp-note { padding: 4px 4px 0; font-size: 13px; text-align: center; color: var(--text-soft); }
-.mp-foot { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; width: min(100% - 2 * var(--gutter), 760px); margin: 28px auto 0; padding: 22px 0 40px; border-top: 1px solid var(--line); font-weight: 700; color: var(--forest); }
-.mp-foot a { display: inline-flex; align-items: center; gap: 6px; }
+.mp-jump a[aria-current] { background: var(--forest); border-color: var(--forest); color: var(--ivory); }
+
+.mp-list { display: grid; gap: clamp(36px, 6vw, 56px); width: var(--mp-w); margin: clamp(28px, 5vw, 44px) auto 0; }
+.mp-cat { scroll-margin-top: 78px; }
+.mp-cat-head { display: grid; justify-items: center; gap: 4px; margin-bottom: clamp(16px, 3vw, 24px); text-align: center; }
+.mp-num { font-size: 12px; font-weight: 800; letter-spacing: .2em; color: var(--text-soft); }
+.mp-cat-head h2 { font-size: clamp(32px, 7vw, 46px); color: var(--forest); }
+.mp-items { display: grid; gap: 10px; }
+@media (min-width: 760px) { .mp-items { grid-template-columns: 1fr 1fr; gap: 14px; } }
+.mp-item { display: flex; gap: 14px; align-items: center; padding: 14px 16px; border-radius: var(--radius); border: 1px solid color-mix(in srgb, var(--beige) 75%, transparent); background: color-mix(in srgb, var(--ivory) 94%, transparent); box-shadow: 0 12px 24px -22px color-mix(in srgb, var(--ink-deep) 70%, transparent); }
+.mp-item[data-photo='true'] { padding: 10px 14px 10px 10px; }
+.mp-photo { position: relative; flex: none; width: 96px; aspect-ratio: 1; overflow: hidden; border-radius: 12px; background: var(--parchment); }
+@media (min-width: 760px) { .mp-photo { width: 104px; } }
+.mp-body { display: grid; gap: 4px; flex: 1; min-width: 0; }
+.mp-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.mp-row h3 { font-size: clamp(17px, 2.2vw, 19px); line-height: 1.2; color: var(--forest); }
+.mp-price { flex: none; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--gold) 26%, var(--ivory)); font-size: 14px; font-weight: 800; color: var(--ink-deep); white-space: nowrap; }
+.mp-body p { font-size: 14px; line-height: 1.5; color: var(--text-soft); }
+.mp-note { padding: 4px; font-size: 13px; text-align: center; color: var(--text-soft); }
+.mp-foot { position: relative; overflow: hidden; display: grid; justify-items: center; gap: 18px; margin-top: clamp(40px, 7vw, 64px); padding: 36px var(--gutter) 44px; background: var(--forest); }
+.mp-foot-logo { position: relative; z-index: 1; width: 120px; --logo-color: var(--white); }
+.mp-foot-links { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; font-weight: 700; color: var(--on-dark-soft); }
+.mp-foot-links a { display: inline-flex; align-items: center; gap: 6px; }
+.mp-foot-links a:hover { color: var(--ivory); }
 
 /* ── QR kartice za štampu (/meni/qr) ───────────────────────────────── */
 .qr-page { width: min(100% - 2 * var(--gutter), 900px); margin: 0 auto; padding-block: 32px 48px; }

@@ -1,50 +1,78 @@
-import { ArrowLeft, ArrowUpRight, MapPin } from 'lucide-react'
+import { ArrowLeft, ArrowUp, ArrowUpRight, MapPin } from 'lucide-react'
 import { itemImage, menuCategories } from '@/data/menu'
 import { siteConfig } from '@/data/site-config'
 import { dict, formatPrice, paths, tr, type Locale } from '@/lib/i18n'
 import { SiteImage } from './site-image'
 import { LogoMark } from './logo-mark'
-import { MenuIcon } from './botanical'
+import { MenuJump } from './menu-jump'
+import { BlossomBranch, LeafSprig } from './botanical'
 
-/** Cijeli meni na jednoj stranici, za QR kod na stolovima: brz, bez JavaScripta, prvo za mobitel. */
+/** Ukrasni razdjelnik kao na štampanom meniju: linija, romb i tačke. */
+function Divider() {
+  return <svg className="mp-divider" viewBox="0 0 240 14" aria-hidden="true" focusable="false">
+    <path d="M4 7h92M144 7h92" />
+    <circle cx="100" cy="7" r="1.6" /><circle cx="140" cy="7" r="1.6" />
+    <path d="m120 1.5 5.5 5.5-5.5 5.5-5.5-5.5Z" />
+  </svg>
+}
+
+/** Cijeli meni na jednoj stranici, za QR kod na stolovima: brz, čitljiv na mobitelu, u stilu štampanog Behut menija. */
 export function MenuPage({ locale }: { locale: Locale }) {
   const t = dict[locale]
   const other: Locale = locale === 'bs' ? 'en' : 'bs'
-  return <>
+  return <div className="mp">
     <a className="skip-link" href="#meni-lista">{t.skip}</a>
-    <header className="mp-head">
-      <div className="mp-bar">
-        <a className="mp-back" href={paths.home[locale]}><ArrowLeft size={16} aria-hidden="true" />{t.menuPage.back}</a>
-        <a className="mp-logo" href={paths.home[locale]} aria-label={t.toTop}><LogoMark /></a>
-        <a className="lang-switch" href={paths.menu[other]} hrefLang={other} lang={other} aria-label={t.nav.switchLabel}>{other.toUpperCase()}</a>
+    <header className="mp-hero">
+      <div className="mp-top">
+        <a className="mp-pill" href={paths.home[locale]}><ArrowLeft size={16} aria-hidden="true" />{t.menuPage.back}</a>
+        <a className="mp-pill" href={paths.menu[other]} hrefLang={other} lang={other} aria-label={t.nav.switchLabel}>{other.toUpperCase()}</a>
       </div>
-      <h1>{t.menuPage.title}</h1>
-      <p>{t.menuPage.lead}</p>
+      <div className="mp-title-card">
+        <BlossomBranch className="mp-branch" />
+        <LeafSprig className="mp-sprig" />
+        <span className="mp-eyebrow">Kovači 20 · Sarajevo</span>
+        <a className="mp-logo" href={paths.home[locale]} aria-label={t.toTop}><LogoMark /></a>
+        <h1>{t.menuPage.title}</h1>
+        <Divider />
+        <p>{t.menuPage.lead}</p>
+      </div>
     </header>
-    <nav className="mp-jump" aria-label={t.menuPage.jump}>
-      <ul>{menuCategories.map(category => <li key={category.id}><a href={`#${category.id}`}>{tr(category.name, locale)}</a></li>)}</ul>
-    </nav>
+
+    <MenuJump categories={menuCategories.map(category => ({ id: category.id, name: tr(category.name, locale) }))} label={t.menuPage.jump} />
+
     <main id="meni-lista" className="mp-list" tabIndex={-1}>
-      {menuCategories.map(category => <section key={category.id} id={category.id} className="mp-cat" aria-labelledby={`${category.id}-title`}>
-        <h2 id={`${category.id}-title`}>{tr(category.name, locale)}</h2>
-        <ul>
+      {menuCategories.map((category, index) => <section key={category.id} id={category.id} className="mp-cat" aria-labelledby={`${category.id}-title`}>
+        <header className="mp-cat-head">
+          <span className="mp-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <h2 id={`${category.id}-title`}>{tr(category.name, locale)}</h2>
+          <Divider />
+        </header>
+        <ul className="mp-items">
           {category.items.map(item => {
             const image = itemImage(item, locale)
-            return <li key={item.id} className="mp-item">
-              <span className="mp-thumb">{image ? <SiteImage image={image} sizes="72px" /> : <MenuIcon type={item.icon ?? 'cup'} />}</span>
-              <span className="mp-text">
-                <span className="mp-line"><strong>{tr(item.name, locale)}</strong><span className="mp-dots" aria-hidden="true" /><span className="mp-price">{formatPrice(item.price, locale)}</span></span>
-                {item.description && <span className="mp-desc">{tr(item.description, locale)}</span>}
-              </span>
+            return <li key={item.id} className="mp-item" data-photo={Boolean(image)}>
+              {image && <span className="mp-photo"><SiteImage image={image} sizes="(min-width: 760px) 120px, 96px" /></span>}
+              <div className="mp-body">
+                <div className="mp-row">
+                  <h3>{tr(item.name, locale)}</h3>
+                  <span className="mp-price">{formatPrice(item.price, locale)}</span>
+                </div>
+                {item.description && <p>{tr(item.description, locale)}</p>}
+              </div>
             </li>
           })}
         </ul>
       </section>)}
       <p className="mp-note">{t.menuPage.note}</p>
     </main>
-    <footer className="mp-foot">
-      <a href={siteConfig.maps} target="_blank" rel="noreferrer"><MapPin size={16} aria-hidden="true" />Kovači 20, Sarajevo<span className="sr-only">{t.opensMaps}</span></a>
-      <a href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only">{t.opensInstagram}</span></a>
+
+    <footer className="mp-foot on-dark beans">
+      <LogoMark className="mp-foot-logo" />
+      <div className="mp-foot-links">
+        <a href={siteConfig.maps} target="_blank" rel="noreferrer"><MapPin size={16} aria-hidden="true" />Kovači 20, Sarajevo<span className="sr-only">{t.opensMaps}</span></a>
+        <a href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only">{t.opensInstagram}</span></a>
+        <a href="#">{t.footer.top.replace(' ↑', '')} <ArrowUp size={15} aria-hidden="true" /></a>
+      </div>
     </footer>
-  </>
+  </div>
 }

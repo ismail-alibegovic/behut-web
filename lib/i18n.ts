@@ -47,7 +47,7 @@ const bs = {
   instagram: { eyebrow: 'Trenutke ne brojimo. Čuvamo ih.', lead: 'Malo offline, malo na feedu. Povuci konopac ili klikni fotku.', follow: 'Prati nas na Instagramu', carousel: 'Behut reelovi s Instagrama', open: 'Otvori reel', prev: 'Prethodna objava', next: 'Sljedeća objava', post: (i: number, n: number) => `Objava ${i} od ${n}: ` },
   location: { eyebrow: 'Lokacija', title: 'Vidimo se na Kovačima.', country: 'Bosna i Hercegovina', map: 'Mapa: Behut Coffee shop, Kovači 20, Sarajevo' },
   footer: { tag: 'Dobra kafa. Dobri ljudi.', tagEm: 'To je Behut.', visit: 'Posjeti nas', explore: 'Istraži', follow: 'Prati nas', links: 'Linkovi u podnožju', since: 'Sarajevo · Kovači 20 · od 2024.', top: 'Nazad na vrh ↑' },
-  menuPage: { title: 'Meni', lead: 'Behut Coffee shop · Kovači 20, Sarajevo', jump: 'Kategorije', back: 'Na početnu', note: 'Cijene su u KM. Za alergene pitajte osoblje.' },
+  menuPage: { title: 'Meni', lead: 'Kafa, čajevi, sokovi i kolači – sve s merakom.', jump: 'Kategorije', back: 'Na početnu', note: 'Cijene su u KM. Za alergene pitajte osoblje.' },
 }
 
 const en: typeof bs = {
@@ -85,7 +85,7 @@ const en: typeof bs = {
   instagram: { eyebrow: 'We don’t count moments. We keep them.', lead: 'A little offline, a little on the feed. Pull the string or tap a photo.', follow: 'Follow us on Instagram', carousel: 'Behut reels from Instagram', open: 'Open reel', prev: 'Previous post', next: 'Next post', post: (i: number, n: number) => `Post ${i} of ${n}: ` },
   location: { eyebrow: 'Location', title: 'See you on Kovači.', country: 'Bosnia and Herzegovina', map: 'Map: Behut Coffee shop, Kovači 20, Sarajevo' },
   footer: { tag: 'Good coffee. Good people.', tagEm: 'That’s Behut.', visit: 'Visit us', explore: 'Explore', follow: 'Follow us', links: 'Footer links', since: 'Sarajevo · Kovači 20 · since 2024', top: 'Back to top ↑' },
-  menuPage: { title: 'Menu', lead: 'Behut Coffee shop · Kovači 20, Sarajevo', jump: 'Categories', back: 'Home', note: 'Prices in KM (BAM). Ask our staff about allergens.' },
+  menuPage: { title: 'Menu', lead: 'Coffee, teas, juices and cakes – all made with merak.', jump: 'Categories', back: 'Home', note: 'Prices in KM (BAM). Ask our staff about allergens.' },
 }
 
 export const dict = { bs, en }
