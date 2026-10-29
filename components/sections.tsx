@@ -4,6 +4,7 @@ import { images, siteConfig } from '@/data/site-config'
 import { SiteImage } from './site-image'
 import { BlossomBranch, LeafSprig, SingleBlossom } from './botanical'
 import PolaroidLineCarousel from './ui/polaroid-line-carousel'
+import { LogoMark } from './logo-mark'
 import { ReviewStack } from './ui/review-stack'
 import { reviewSummary, reviews } from '@/data/reviews'
 
@@ -151,7 +152,7 @@ export function Footer() {
       </div>
     </div>
     <div className="wrap footer-brand">
-      <a href="#" className="footer-logo" aria-label="BEHUT Sarajevo, na vrh stranice"><Image src={images.logo} alt="" width={640} height={454} sizes="200px" /></a>
+      <a href="#" className="footer-logo" aria-label="BEHUT Sarajevo, na vrh stranice"><LogoMark /></a>
       <div className="footer-wordmark">
         {/* textLength rasteže riječ tačno na širinu kolone, na svakom ekranu. */}
         <svg viewBox="0 0 1000 196" role="img" aria-label="Behut">
