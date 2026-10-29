@@ -13,7 +13,7 @@ export function Hero() {
       <LeafSprig className="hero-sprig" />
       <SingleBlossom className="hero-blossom" />
       <Topbar />
-      <h1 id="hero-title" className="hero-title"><span>Malo kafe.</span> <span><em>Puno meraka.</em></span></h1>
+      <h1 id="hero-title" className="hero-title"><span>Gdje si</span> <span><em>U Behutu</em></span></h1>
       <div className="hero-fan">
         {siteConfig.hero.fan.map(image => <figure key={image.src} className="fan-card"><SiteImage image={image} priority sizes="(min-width: 1200px) 320px, 30vw" /></figure>)}
       </div>

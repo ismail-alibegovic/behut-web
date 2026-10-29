@@ -4,7 +4,7 @@ export const images = {
   logo: '/images/behut-logo.webp',
   terrace: { src: '/images/hero/sarajevo-terrace.webp', alt: 'Behutova terasa s pogledom na krovove starog Sarajeva', position: '50% 58%' },
   facade: { src: '/images/hero/green-facade.webp', alt: 'Zelena fasada Behuta, cvijeće i vintage stolice', position: '50% 45%' },
-  entrance: { src: '/images/gallery/golden-entrance.jpg', alt: 'Zlatni Behut Sarajevo natpis na ulaznim vratima' },
+  entrance: { src: '/images/gallery/golden-entrance.jpg', alt: 'Zlatni Behut Sarajevo natpis na ulaznim vratima', position: '40% 50%' },
   interior: { src: '/images/about/vintage-lounge.webp', alt: 'Topli Behutov salon sa starinskim lampama, slikama i tradicionalnim tekstilom' },
   guitar: { src: '/images/gallery/guitar-and-lamps.webp', alt: 'Gitara i starinska lampa uz zelena vrata Behuta' },
   city: { src: '/images/gallery/kovaci-view.webp', alt: 'Šarene stolice na terasi i pogled niz sarajevske Kovače' },
@@ -19,6 +19,6 @@ export const siteConfig = {
   openingHours: null as string | null,
   phone: null as string | null,
   menuPdf: null as string | null,
-  hero: { backdrop: images.city, fan: [images.terrace, images.facade, images.entrance] },
+  hero: { backdrop: images.city, fan: [images.terrace, images.entrance, images.facade] },
   gallery: [images.guitar, images.city, images.interior, images.facade, images.entrance, images.terrace],
 }
