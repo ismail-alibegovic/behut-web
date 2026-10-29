@@ -1,10 +1,10 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Manrope, Pinyon_Script } from 'next/font/google'
+import { Figtree, Pinyon_Script, Young_Serif } from 'next/font/google'
 import './globals.css'
 
-const display = Fraunces({ subsets: ['latin', 'latin-ext'], axes: ['SOFT', 'WONK', 'opsz'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' })
-const sans = Manrope({ subsets: ['latin', 'latin-ext'], variable: '--font-body', display: 'swap' })
+const display = Young_Serif({ subsets: ['latin', 'latin-ext'], weight: '400', variable: '--font-display', display: 'swap' })
+const sans = Figtree({ subsets: ['latin', 'latin-ext'], variable: '--font-body', display: 'swap' })
 // Samo za dekorativno slovo u pozadini heroja.
 const script = Pinyon_Script({ subsets: ['latin'], weight: '400', variable: '--font-script', display: 'swap', preload: false })
 
