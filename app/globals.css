@@ -211,7 +211,8 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .chip { min-height: 44px; padding: 8px 20px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--forest) 22%, transparent); background: var(--ivory); color: var(--forest); font-family: var(--font-display), serif; font-size: clamp(16px, 1.5vw, 19px); font-weight: 600; white-space: nowrap; box-shadow: 0 8px 18px -12px color-mix(in srgb, var(--ink-deep) 70%, transparent); transform: translateY(calc(var(--t2) * var(--arc-depth))) rotate(calc(var(--t) * var(--arc-tilt))); transition: background-color .25s, border-color .25s, box-shadow .25s, transform .35s var(--ease); }
 .chip:hover { background: var(--parchment); }
 .chip[aria-pressed='true'] { background: var(--gold); border-color: var(--gold); color: var(--ink-deep); box-shadow: 0 12px 26px -12px color-mix(in srgb, var(--ink-deep) 80%, transparent); transform: translateY(calc(var(--t2) * var(--arc-depth) - 4px)) rotate(calc(var(--t) * var(--arc-tilt))) scale(1.06); }
-@media (min-width: 900px) {
+/* Luk od 8 chipova je širok ~1140-1290px; ispod 1360px ostaje skrolabilan red. */
+@media (min-width: 1360px) {
   .arc { --arc-depth: 54px; --arc-tilt: 13deg; justify-content: center; gap: clamp(10px, 1.4vw, 20px); overflow: visible; margin-bottom: -42px; -webkit-mask: none; mask: none; }
 }
 
