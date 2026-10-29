@@ -8,7 +8,7 @@ export function Hero() {
   return <section className="hero" aria-labelledby="hero-title">
     <div className="hero-backdrop"><SiteImage image={{ ...siteConfig.hero.backdrop, alt: '' }} priority sizes="100vw" /></div>
     <div className="hero-card">
-      <span className="hero-watermark" aria-hidden="true">B</span>
+      <span className="hero-beans" aria-hidden="true" />
       <BlossomBranch className="hero-branch" />
       <LeafSprig className="hero-sprig" />
       <SingleBlossom className="hero-blossom" />
