@@ -1,16 +1,19 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Manrope } from 'next/font/google'
+import { Fraunces, Manrope, Pinyon_Script } from 'next/font/google'
 import './globals.css'
 
-const serif = Cormorant_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'], style: ['normal', 'italic'], variable: '--font-editorial', display: 'swap' })
+const display = Fraunces({ subsets: ['latin', 'latin-ext'], axes: ['SOFT', 'WONK', 'opsz'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' })
 const sans = Manrope({ subsets: ['latin', 'latin-ext'], variable: '--font-body', display: 'swap' })
+// Samo za dekorativno slovo u pozadini heroja.
+const script = Pinyon_Script({ subsets: ['latin'], weight: '400', variable: '--font-script', display: 'swap', preload: false })
+
 export const metadata: Metadata = {
-  title: 'BEHUT Sarajevo — Kafa s pogledom. Sarajevo s dušom.',
+  title: 'BEHUT Sarajevo — Malo kafe. Puno meraka.',
   description: 'U srcu Sarajeva, na Kovačima 20. Otkrijte Behut, našu terasu, vintage ambijent i bosansku kafu. Za trenutke koji ostaju.',
 }
-export const viewport: Viewport = { colorScheme: 'light', themeColor: '#103C2F' }
+export const viewport: Viewport = { colorScheme: 'light', themeColor: '#103225' }
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   // Browser extensions inject webcrx attributes on html before hydration.
-  return <html lang="bs" suppressHydrationWarning className={`${serif.variable} ${sans.variable}`}><body>{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
+  return <html lang="bs" suppressHydrationWarning className={`${display.variable} ${sans.variable} ${script.variable}`}><body>{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
 }
