@@ -1,8 +1,7 @@
 import { ArrowLeft, ArrowUp, ArrowUpRight, MapPin } from 'lucide-react'
-import { itemImage, menuCategories, type MenuCategory } from '@/data/menu'
+import { menuCategories, type MenuCategory } from '@/data/menu'
 import { siteConfig } from '@/data/site-config'
 import { dict, formatPrice, paths, tr, type Locale } from '@/lib/i18n'
-import { SiteImage } from './site-image'
 import { LogoMark } from './logo-mark'
 import { MenuJump } from './menu-jump'
 import { BlossomBranch, LeafSprig } from './botanical'
@@ -32,10 +31,7 @@ function Category({ category, locale }: { category: MenuCategory; locale: Locale
       <Divider />
     </header>
     <ul className="mp-items">
-      {category.items.map(item => {
-        const image = itemImage(item, locale)
-        return <li key={item.id} className="mp-item">
-          {image && <span className="mp-photo"><SiteImage image={image} sizes="72px" /></span>}
+      {category.items.map(item => <li key={item.id} className="mp-item">
           <div className="mp-body">
             <div className="mp-row">
               <h3>{tr(item.name, locale)}</h3>
@@ -44,8 +40,7 @@ function Category({ category, locale }: { category: MenuCategory; locale: Locale
             </div>
             {item.description && <p>{tr(item.description, locale)}</p>}
           </div>
-        </li>
-      })}
+        </li>)}
     </ul>
   </section>
 }

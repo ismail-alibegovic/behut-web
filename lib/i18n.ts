@@ -28,7 +28,7 @@ const bs = {
   showcase: { eyebrow: 'Naši mali rituali', title: 'Izaberi svoje piće', chips: 'Izdvojena pića', cta: 'Pogledaj meni', prev: 'Prethodno piće', next: 'Sljedeće piće' },
   menu: {
     eyebrow: 'Meni', title: 'Po tvom. Po našem.', lead: 'Od prve jutarnje do posljednje priče. Pronađi nešto baš za sebe.',
-    categories: 'Kategorije menija', details: 'Detalji', close: 'Zatvori', more: (n: number) => `Prikaži još ${n} ${n === 1 ? 'piće' : 'pića'}`, less: 'Prikaži manje',
+    categories: 'Kategorije menija', details: 'Detalji', flavours: 'Okusi', close: 'Zatvori', more: (n: number) => `Prikaži još ${n} ${n === 1 ? 'piće' : 'pića'}`, less: 'Prikaži manje',
     full: 'Cijeli meni', pdf: 'Cijeli meni (PDF)',
   },
   cta: { eyebrow: 'Kovači 20, Sarajevo', title: 'Kafa je na putu?', titleEm: 'Svrati na Kovače.', lead: 'Bez žurbe, bez povoda. Sjedi, naruči i ostani još malo.', points: ['U srcu Sarajeva', 'Terasa s pogledom', 'Vintage ambijent'] },
@@ -66,7 +66,7 @@ const en: typeof bs = {
   showcase: { eyebrow: 'Our little rituals', title: 'Pick your drink', chips: 'Featured drinks', cta: 'See the menu', prev: 'Previous drink', next: 'Next drink' },
   menu: {
     eyebrow: 'Menu', title: 'Your way. Our way.', lead: 'From the first morning cup to the last story of the day. Find something just for you.',
-    categories: 'Menu categories', details: 'Details', close: 'Close', more: (n: number) => `Show ${n} more ${n === 1 ? 'drink' : 'drinks'}`, less: 'Show less',
+    categories: 'Menu categories', details: 'Details', flavours: 'Flavours', close: 'Close', more: (n: number) => `Show ${n} more ${n === 1 ? 'drink' : 'drinks'}`, less: 'Show less',
     full: 'Full menu', pdf: 'Full menu (PDF)',
   },
   cta: { eyebrow: 'Kovači 20, Sarajevo', title: 'Craving coffee?', titleEm: 'Drop by Kovači.', lead: 'No rush, no reason needed. Sit down, order and stay a little longer.', points: ['In the heart of Sarajevo', 'Terrace with a view', 'Vintage atmosphere'] },

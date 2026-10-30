@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, ChevronDown, FileText, Plus, X } from 'lucide-react'
-import { homeCategories, itemImage, type MenuEntry } from '@/data/menu'
+import { homeCategories, itemImage, variantImage, type MenuEntry } from '@/data/menu'
 import { siteConfig } from '@/data/site-config'
 import { dict, formatPrice, paths, tr, type Locale } from '@/lib/i18n'
 import { SiteImage } from './site-image'
@@ -14,13 +14,15 @@ export function MenuGrid({ locale }: { locale: Locale }) {
   const t = dict[locale]
   const [selected, setSelected] = useState(0)
   const [detail, setDetail] = useState<MenuEntry | null>(null)
+  const [variant, setVariant] = useState(0)
   // Prvo samo dva reda pića, da dugačka kategorija ne razvuče stranicu.
   const [expanded, setExpanded] = useState(false)
   const dialog = useRef<HTMLDialogElement>(null)
   const category = homeCategories[selected]
   const visible = expanded ? category.items : category.items.slice(0, PREVIEW_COUNT)
   const hidden = category.items.length - visible.length
-  const detailImage = detail && itemImage(detail, locale)
+  const detailVariant = detail?.variants?.[variant]
+  const detailImage = detail && (detailVariant ? variantImage(detail, detailVariant, locale) : itemImage(detail, locale))
 
   // Dijalog se otvara tek kad je sadržaj iscrtan, da fokus padne na dugme za zatvaranje.
   useEffect(() => { if (detail && !dialog.current?.open) dialog.current?.showModal() }, [detail])
@@ -45,7 +47,7 @@ export function MenuGrid({ locale }: { locale: Locale }) {
                 <h3>{tr(item.name, locale)}</h3>
                 <p>{formatPrice(item.price, locale)}</p>
               </div>
-              <button className="swatch-plus" onClick={() => setDetail({ ...item, category: category.name })} aria-haspopup="dialog" aria-label={`${t.menu.details}: ${tr(item.name, locale)}`}><Plus size={16} aria-hidden="true" /></button>
+              <button className="swatch-plus" onClick={() => { setVariant(0); setDetail({ ...item, category: category.name }) }} aria-haspopup="dialog" aria-label={`${t.menu.details}: ${tr(item.name, locale)}`}><Plus size={16} aria-hidden="true" /></button>
             </div>
           </li>
         })}
@@ -67,6 +69,12 @@ export function MenuGrid({ locale }: { locale: Locale }) {
           <span className="menu-cat">{tr(detail.category, locale)}</span>
           <h3 id="stavka-naslov">{tr(detail.name, locale)}</h3>
           {detail.description && <p>{tr(detail.description, locale)}</p>}
+          {detail.variants && <div className="item-variants" role="group" aria-label={t.menu.flavours}>
+            {detail.variants.map((item, index) => <button key={item.id} className="item-variant" aria-pressed={variant === index} onClick={() => setVariant(index)}>
+              <span className="item-variant-photo"><SiteImage image={variantImage(detail, item, locale)} sizes="64px" /></span>
+              {tr(item.name, locale)}
+            </button>)}
+          </div>}
           <p className="menu-price">{formatPrice(detail.price, locale)}</p>
         </div>
       </>}

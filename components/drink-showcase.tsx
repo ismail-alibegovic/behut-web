@@ -6,7 +6,7 @@ import { ArrowDownRight, ArrowLeft, ArrowRight } from 'lucide-react'
 import { featuredDrinks, itemImage } from '@/data/menu'
 import { dict, formatPrice, tr, type Locale } from '@/lib/i18n'
 import { SiteImage } from './site-image'
-import { BlossomBranch, LeafSprig } from './botanical'
+import { BlossomBranch, LeafSprig, MenuIcon } from './botanical'
 
 export function DrinkShowcase({ locale }: { locale: Locale }) {
   const t = dict[locale]
@@ -40,9 +40,9 @@ export function DrinkShowcase({ locale }: { locale: Locale }) {
       <LeafSprig className="dark-sprig" />
       <div id="istaknuto-pice" className="showcase-grid wrap" aria-live="polite">
         <div className="showcase-visual">
-          {photo && <div className="showcase-photo" key={drink.id} style={{ '--focus': photo.position ?? '50% 50%' } as CSSProperties}>
-            <SiteImage image={photo} sizes="(min-width: 900px) 340px, 60vw" />
-          </div>}
+          <div className="showcase-photo" key={drink.id} style={{ '--focus': photo?.position ?? '50% 50%' } as CSSProperties}>
+            {photo ? <SiteImage image={photo} sizes="(min-width: 900px) 340px, 60vw" /> : <MenuIcon type={drink.icon ?? 'cup'} />}
+          </div>
           <Image className="showcase-frame" src="/images/frames/oval-frame.webp" alt="" width={700} height={903} sizes="(min-width: 900px) 440px, 90vw" />
         </div>
         <div className="showcase-copy" key={`copy-${drink.id}`}>
