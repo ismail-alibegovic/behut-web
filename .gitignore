@@ -15,3 +15,7 @@ node_modules
 .next/
 .DS_Store
 *.tsbuildinfo
+
+# Static export za cPanel
+out/
+behut-cpanel.zip

@@ -20,7 +20,7 @@ export const images = {
 export const siteConfig = {
   name: 'BEHUT Sarajevo',
   /** Javna adresa sajta; QR kodovi za meni vode ovdje. Promijeni kad bude vlastita domena. */
-  siteUrl: 'https://behut-web.vercel.app',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://behut-web.vercel.app',
   instagram: 'https://www.instagram.com/behut_cafe/',
   address: 'Kovači 20, 71000 Sarajevo, Bosnia and Herzegovina',
   // Google Maps profil "Behut Coffee shop" (43.8602721, 18.4322111).

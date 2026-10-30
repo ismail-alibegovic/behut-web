@@ -26,5 +26,5 @@ export const siteViewport: Viewport = { colorScheme: 'light', themeColor: '#1032
 /** Zajednički <html> za oba jezika; svaka jezička grupa ruta ima svoj root layout s ovim. */
 export function SiteHtml({ locale, children }: { locale: Locale; children: React.ReactNode }) {
   // Browser extensions inject webcrx attributes on html before hydration.
-  return <html lang={locale} suppressHydrationWarning className={`${display.variable} ${sans.variable}`}><body>{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
+  return <html lang={locale} suppressHydrationWarning className={`${display.variable} ${sans.variable}`}><body>{children}{process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_STATIC_EXPORT && <Analytics />}</body></html>
 }

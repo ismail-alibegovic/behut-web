@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "build:static": "rm -rf out && STATIC_EXPORT=1 NEXT_PUBLIC_STATIC_EXPORT=1 NEXT_PUBLIC_SITE_URL=https://www.behut.ba next build && cp cpanel/.htaccess cpanel/robots.txt cpanel/sitemap.xml out/"
   },
   "dependencies": {
     "@vercel/analytics": "1.6.1",

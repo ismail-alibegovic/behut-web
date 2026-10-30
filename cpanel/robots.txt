@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /meni/qr/
+
+Sitemap: https://www.behut.ba/sitemap.xml
