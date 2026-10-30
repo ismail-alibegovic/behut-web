@@ -4,10 +4,10 @@ Options -Indexes
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  # Sve na https://www.behut.ba (QR kodovi i canonical linkovi vode tamo).
+  # Sve na https://behut.ba (bez www; QR kodovi i canonical linkovi vode tamo).
   RewriteCond %{HTTPS} off [OR]
-  RewriteCond %{HTTP_HOST} !^www\.behut\.ba$ [NC]
-  RewriteRule ^(.*)$ https://www.behut.ba/$1 [R=301,L]
+  RewriteCond %{HTTP_HOST} !^behut\.ba$ [NC]
+  RewriteRule ^(.*)$ https://behut.ba/$1 [R=301,L]
 </IfModule>
 
 ErrorDocument 404 /404.html

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://www.behut.ba/</loc><xhtml:link rel="alternate" hreflang="bs" href="https://www.behut.ba/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.behut.ba/en/"/></url>
-  <url><loc>https://www.behut.ba/en/</loc><xhtml:link rel="alternate" hreflang="bs" href="https://www.behut.ba/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.behut.ba/en/"/></url>
-  <url><loc>https://www.behut.ba/meni/</loc><xhtml:link rel="alternate" hreflang="bs" href="https://www.behut.ba/meni/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.behut.ba/en/menu/"/></url>
-  <url><loc>https://www.behut.ba/en/menu/</loc><xhtml:link rel="alternate" hreflang="bs" href="https://www.behut.ba/meni/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.behut.ba/en/menu/"/></url>
+  <url><loc>https://behut.ba/</loc><xhtml:link rel="alternate" hreflang="bs" href="https://behut.ba/"/><xhtml:link rel="alternate" hreflang="en" href="https://behut.ba/en/"/></url>
+  <url><loc>https://behut.ba/en/</loc><xhtml:link rel="alternate" hreflang="bs" href="https://behut.ba/"/><xhtml:link rel="alternate" hreflang="en" href="https://behut.ba/en/"/></url>
+  <url><loc>https://behut.ba/meni/</loc><xhtml:link rel="alternate" hreflang="bs" href="https://behut.ba/meni/"/><xhtml:link rel="alternate" hreflang="en" href="https://behut.ba/en/menu/"/></url>
+  <url><loc>https://behut.ba/en/menu/</loc><xhtml:link rel="alternate" hreflang="bs" href="https://behut.ba/meni/"/><xhtml:link rel="alternate" hreflang="en" href="https://behut.ba/en/menu/"/></url>
 </urlset>
