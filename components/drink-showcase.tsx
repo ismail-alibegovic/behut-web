@@ -4,7 +4,9 @@ import { useRef, useState, type CSSProperties } from 'react'
 import Image from 'next/image'
 import { ArrowDownRight, ArrowLeft, ArrowRight } from 'lucide-react'
 import { featuredDrinks, itemImage } from '@/data/menu'
-import { dict, formatPrice, tr, type Locale } from '@/lib/i18n'
+import { drinkContent } from '@/data/drinks'
+import { pagePath } from '@/lib/seo'
+import { dict, formatPrice, paths, tr, type Locale } from '@/lib/i18n'
 import { SiteImage } from './site-image'
 import { BlossomBranch, LeafSprig, MenuIcon } from './botanical'
 
@@ -50,6 +52,7 @@ export function DrinkShowcase({ locale }: { locale: Locale }) {
           <h3>{tr(drink.name, locale)}</h3>
           {drink.description && <p>{tr(drink.description, locale)}</p>}
           <p className="showcase-price">{formatPrice(drink.price, locale)}</p>
+          {drinkContent.some(content => content.id === drink.id) && <a className="showcase-more" href={`${pagePath(paths.drinks[locale])}#${drink.id}`}>{t.menuPage.moreAbout} <ArrowRight size={15} aria-hidden="true" /></a>}
           <div className="showcase-actions">
             <a className="btn btn-gold" href="#meni">{t.showcase.cta}<span className="btn-icon"><ArrowDownRight size={17} aria-hidden="true" /></span></a>
             <button className="round-btn" onClick={() => select(selected - 1)} aria-label={t.showcase.prev}><ArrowLeft size={18} aria-hidden="true" /></button>

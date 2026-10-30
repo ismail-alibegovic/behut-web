@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import { ArrowUpRight, Camera, Lamp, Mail, MapPin, Sun } from 'lucide-react'
 import { images, localize, siteConfig } from '@/data/site-config'
-import { dict, tr, type Locale } from '@/lib/i18n'
+import { dict, paths, tr, type Locale } from '@/lib/i18n'
+import { pagePath } from '@/lib/seo'
 import { SiteImage } from './site-image'
 import { BlossomBranch, LeafSprig, SingleBlossom } from './botanical'
 import PolaroidLineCarousel from './ui/polaroid-line-carousel'
@@ -152,6 +153,7 @@ export function Footer({ locale }: { locale: Locale }) {
       <nav className="footer-col" aria-label={t.footer.links}>
         <h2>{t.footer.explore}</h2>
         <a href="#meni">{t.nav.menu}</a>
+        <a href={pagePath(paths.drinks[locale])}>{t.menuPage.drinks}</a>
         <a href="#prica">{t.nav.story}</a>
         <a href="#galerija">{t.nav.gallery}</a>
         <a href="#lokacija">{t.nav.location}</a>

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, ChevronDown, FileText, Plus, X } from 'lucide-react'
 import { homeCategories, itemImage, variantImage, type MenuEntry } from '@/data/menu'
 import { siteConfig } from '@/data/site-config'
+import { drinkContent } from '@/data/drinks'
+import { pagePath } from '@/lib/seo'
 import { dict, formatPrice, paths, tr, type Locale } from '@/lib/i18n'
 import { SiteImage } from './site-image'
 import { MenuIcon } from './botanical'
@@ -76,6 +78,7 @@ export function MenuGrid({ locale }: { locale: Locale }) {
             </button>)}
           </div>}
           <p className="menu-price">{formatPrice(detail.price, locale)}</p>
+          {drinkContent.some(content => content.id === detail.id) && <a className="text-link" href={`${pagePath(paths.drinks[locale])}#${detail.id}`}>{t.menuPage.moreAbout} →</a>}
         </div>
       </>}
     </dialog>
