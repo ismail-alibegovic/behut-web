@@ -132,7 +132,7 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .text-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; border-bottom: 1.5px solid currentColor; padding-bottom: 2px; }
 
 /* ── Hero ─────────────────────────────────────────────────────────── */
-.hero { position: relative; isolation: isolate; padding: clamp(10px, 2.6svh, 32px) clamp(10px, 6vw, 110px) clamp(48px, 7vw, 110px); }
+.hero { position: relative; isolation: isolate; padding: clamp(10px, 2.6svh, 32px) clamp(10px, 6vw, 110px) calc(var(--torn) + clamp(28px, 5vw, 80px)); -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - var(--torn) + 2px) no-repeat, url('/textures/torn-bottom.svg') bottom / 100% var(--torn) no-repeat; mask: linear-gradient(#000 0 0) top / 100% calc(100% - var(--torn) + 2px) no-repeat, url('/textures/torn-bottom.svg') bottom / 100% var(--torn) no-repeat; }
 .hero-backdrop { position: absolute; inset: 0; z-index: -1; }
 .hero-backdrop::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--ink-deep) 55%, transparent), color-mix(in srgb, var(--forest) 70%, transparent)); }
 .hero-card { position: relative; overflow: hidden; max-width: 1320px; margin-inline: auto; padding: 14px clamp(14px, 3vw, 44px) clamp(32px, 4svh, 52px); border-radius: var(--radius-lg); background: var(--ivory); box-shadow: 0 40px 80px -40px color-mix(in srgb, var(--ink-deep) 90%, transparent); }
