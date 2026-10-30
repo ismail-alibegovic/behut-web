@@ -1,12 +1,12 @@
-import type { Metadata } from 'next'
 import { MenuPage } from '@/components/menu-page'
-import { paths } from '@/lib/i18n'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Meni — BEHUT Sarajevo',
-  description: 'Cijeli meni Behuta: bosanska kafa, ledene kafe, tradicionalni sokovi, Behut specijaliteti i kolači, s cijenama.',
-  alternates: { canonical: paths.menu.bs, languages: { bs: paths.menu.bs, en: paths.menu.en } },
-}
+export const metadata = pageMetadata({
+  locale: 'bs',
+  title: 'Meni i cijene — BEHUT Sarajevo',
+  description: 'Cijeli meni Behuta na Kovačima u Sarajevu: bosanska kafa, ledene kafe, tradicionalni sokovi, Behut specijaliteti i kolači, s cijenama.',
+  route: 'menu',
+})
 
 export default function Page() {
   return <MenuPage locale="bs" />

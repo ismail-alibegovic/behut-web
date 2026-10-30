@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import QRCode from 'qrcode'
 import { siteConfig } from '@/data/site-config'
 import { paths } from '@/lib/i18n'
+import { pagePath } from '@/lib/seo'
 import { LogoMark } from '@/components/logo-mark'
 
-export const metadata: Metadata = { title: 'QR kod za meni — BEHUT Sarajevo', robots: { index: false } }
+export const metadata: Metadata = { title: 'QR kod za meni — BEHUT Sarajevo', robots: { index: false, follow: false }, alternates: { canonical: pagePath(paths.qr.bs) } }
 
 // Boje QR koda su tokeni --forest i providna pozadina; QR se crta pri buildu, bez JS-a u pregledniku.
 const FOREST = '#103225'

@@ -28,6 +28,7 @@ export const siteConfig = {
   mapsEmbed: 'https://www.google.com/maps?q=Behut+Coffee+shop,+Kova%C4%8Di+20,+Sarajevo&ll=43.8602721,18.4322111&z=17&output=embed',
   openingHours: null as L | null,
   phone: null as string | null,
+  email: 'info@behut.ba',
   menuPdf: null as string | null,
   hero: { backdrop: images.city, fan: [images.terrace, images.entrance, images.facade] },
   /** Reelovi u Instagram sekciji; `featured` je onaj koji je na početku u sredini. */

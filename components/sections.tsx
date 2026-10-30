@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ArrowUpRight, Camera, Lamp, MapPin, Sun } from 'lucide-react'
+import { ArrowUpRight, Camera, Lamp, Mail, MapPin, Sun } from 'lucide-react'
 import { images, localize, siteConfig } from '@/data/site-config'
 import { dict, tr, type Locale } from '@/lib/i18n'
 import { SiteImage } from './site-image'
@@ -111,10 +111,11 @@ export function Location({ locale }: { locale: Locale }) {
             <BlossomBranch className="gilded-branch" />
             <span className="gilded-name">Behut Coffee shop</span>
             <address><MapPin size={20} aria-hidden="true" /><span>Kovači 20<br />71000 Sarajevo<br />{t.location.country}</span></address>
-            {(siteConfig.openingHours || siteConfig.phone) && <div className="location-details">
+            <div className="location-details">
               {siteConfig.openingHours && <p>{tr(siteConfig.openingHours, locale)}</p>}
               {siteConfig.phone && <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>}
-            </div>}
+              <a className="location-mail" href={`mailto:${siteConfig.email}`}><Mail size={18} aria-hidden="true" />{siteConfig.email}</a>
+            </div>
             <a className="btn btn-forest" href={siteConfig.maps} target="_blank" rel="noreferrer">{t.directions}<span className="btn-icon"><ArrowUpRight size={17} aria-hidden="true" /></span><span className="sr-only">{t.opensMaps}</span></a>
           </div>
           <Image className="frame-img" src="/images/frames/gilded-frame.webp" alt="" width={648} height={777} sizes="(min-width: 900px) 420px, 90vw" />
@@ -146,6 +147,7 @@ export function Footer({ locale }: { locale: Locale }) {
         <a href={siteConfig.maps} target="_blank" rel="noreferrer">Kovači 20<br />71000 Sarajevo<span className="sr-only">{t.opensMaps}</span></a>
         {siteConfig.openingHours && <span>{tr(siteConfig.openingHours, locale)}</span>}
         {siteConfig.phone && <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}>{siteConfig.phone}</a>}
+        <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
       </div>
       <nav className="footer-col" aria-label={t.footer.links}>
         <h2>{t.footer.explore}</h2>

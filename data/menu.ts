@@ -47,7 +47,7 @@ export const menuCategories: MenuCategory[] = [
       { id: 'flat-white', focus: '50% 40%', name: same('Flat white'), price: 5, photo: { bs: 'Flat white s latte art crtežom u bijeloj šoljici', en: 'Flat white with latte art in a white cup' } },
       { id: 'americano', focus: '50% 42%', name: same('Americano'), price: 3.5, photo: { bs: 'Americano s kremom u bijeloj šoljici na tanjiriću', en: 'Americano with crema in a white cup on a saucer' } },
       { id: 'kapucino', focus: '50% 40%', name: same('Cappuccino'), price: 4, photo: { bs: 'Kapućino s latte art listom na bijelom tanjiriću', en: 'Cappuccino with latte art on a white saucer' } },
-      { id: 'latte-macchiato', name: same('Latte macchiato'), price: 4.5, icon: 'glass' },
+      { id: 'latte-macchiato', focus: '50% 45%', name: same('Latte macchiato'), price: 4.5, photo: { bs: 'Latte macchiato s pjenom i cimetom u staklenoj šolji s ručkom', en: 'Latte macchiato with foam and cinnamon in a glass mug with a handle' } },
       { id: 'caffe-mocha', name: same('Caffe mocha'), price: 5, icon: 'cup', homeHidden: true },
       { id: 'bezkofeinska-kafa', focus: '50% 42%', name: { bs: 'Bezkofeinska kafa', en: 'Decaf coffee' }, price: 5, photo: { bs: 'Bezkofeinska kafa u bijeloj šoljici na tanjiriću', en: 'Decaf coffee in a white cup on a saucer' } },
       { id: 'topla-cokolada', focus: '50% 48%', name: { bs: 'Topla čokolada', en: 'Hot chocolate' }, price: 5, photo: { bs: 'Topla čokolada sa šlagom i komadićima čokolade u staklenoj šolji', en: 'Hot chocolate with whipped cream and chocolate pieces in a glass mug' } },

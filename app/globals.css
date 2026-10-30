@@ -453,6 +453,8 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .gilded address { display: flex; gap: 10px; font-style: normal; font-size: clamp(15px, 1.3vw, 17px); font-weight: 600; line-height: 1.5; color: var(--forest); }
 .gilded address svg { flex: none; margin-top: 3px; }
 .location-details { display: grid; gap: 6px; color: var(--text-soft); }
+.location-mail { display: inline-flex; align-items: center; gap: 10px; width: fit-content; font-weight: 600; color: var(--forest); text-underline-offset: 4px; }
+.location-mail:hover { text-decoration: underline; }
 /* Bijelo-zlatni okvir 735x511, otvor ~115-635 x 113-414; mapa ulazi malo ispod ruba. */
 .ornate { position: relative; width: 100%; aspect-ratio: 735 / 511; }
 .ornate-map { position: absolute; left: 13.6%; top: 19.6%; width: 72.8%; height: 64.2%; overflow: hidden; background: var(--parchment); }

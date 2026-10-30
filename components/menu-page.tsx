@@ -1,10 +1,12 @@
-import { ArrowLeft, ArrowUp, ArrowUpRight, MapPin } from 'lucide-react'
+import { ArrowLeft, ArrowUp, ArrowUpRight, Mail, MapPin } from 'lucide-react'
 import { menuCategories, type MenuCategory } from '@/data/menu'
 import { siteConfig } from '@/data/site-config'
 import { dict, formatPrice, paths, tr, type Locale } from '@/lib/i18n'
 import { LogoMark } from './logo-mark'
 import { MenuJump } from './menu-jump'
 import { BlossomBranch, LeafSprig } from './botanical'
+import { JsonLd } from './json-ld'
+import { breadcrumbJsonLd, cafeJsonLd, menuJsonLd } from '@/lib/seo'
 
 // Raspored kao na štampanom meniju (Kula.pdf): lijeva i desna kolona, odozgo prema dolje.
 const COLUMNS = [
@@ -50,6 +52,7 @@ export function MenuPage({ locale }: { locale: Locale }) {
   const t = dict[locale]
   const other: Locale = locale === 'bs' ? 'en' : 'bs'
   return <div className="mp">
+    <JsonLd data={[cafeJsonLd(locale), menuJsonLd(locale), breadcrumbJsonLd(locale)]} />
     <a className="skip-link" href="#meni-lista">{t.skip}</a>
     <header className="mp-hero on-dark beans">
       <BlossomBranch className="mp-branch" />
@@ -79,6 +82,7 @@ export function MenuPage({ locale }: { locale: Locale }) {
       <LogoMark className="mp-foot-logo" />
       <div className="mp-foot-links">
         <a href={siteConfig.maps} target="_blank" rel="noreferrer"><MapPin size={16} aria-hidden="true" />Kovači 20, Sarajevo<span className="sr-only">{t.opensMaps}</span></a>
+        <a href={`mailto:${siteConfig.email}`}><Mail size={16} aria-hidden="true" />{siteConfig.email}</a>
         <a href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only">{t.opensInstagram}</span></a>
         <a href="#">{t.footer.top.replace(' ↑', '')} <ArrowUp size={15} aria-hidden="true" /></a>
       </div>
