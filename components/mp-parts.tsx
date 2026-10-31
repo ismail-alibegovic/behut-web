@@ -43,5 +43,6 @@ export function MpFoot({ locale }: { locale: Locale }) {
       <a href={siteConfig.instagram} target="_blank" rel="noreferrer">@behut_cafe <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only">{t.opensInstagram}</span></a>
       <a href="#">{t.footer.top.replace(' ↑', '')} <ArrowUp size={15} aria-hidden="true" /></a>
     </div>
+    <div className="mp-foot-copy"><p>© {new Date().getFullYear()} BEHUT Sarajevo. {t.footer.rights}.</p><p className="footer-credit">{t.footer.madeBy} <em>Ismail Alibegović</em></p></div>
   </footer>
 }

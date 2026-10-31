@@ -174,8 +174,9 @@ export function Footer({ locale }: { locale: Locale }) {
       </div>
     </div>
     <div className="wrap footer-bottom">
-      <span>© {new Date().getFullYear()} BEHUT Sarajevo</span>
+      <span className="footer-copy">© {new Date().getFullYear()} BEHUT Sarajevo. {t.footer.rights}.</span>
       <a href="#">{t.footer.top}</a>
+      <p className="footer-credit">{t.footer.madeBy} <em>Ismail Alibegović</em></p>
     </div>
   </footer>
 }

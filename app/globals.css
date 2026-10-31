@@ -480,7 +480,14 @@ main > section, .hero { overflow-x: hidden; overflow-x: clip; }
 .footer-wordmark svg { width: 100%; height: auto; overflow: visible; }
 .footer-wordmark text { font-family: var(--font-display), Georgia, serif; font-size: 262px; font-weight: 600; fill: var(--ivory); }
 .footer-wordmark span { justify-self: end; font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
-.footer-bottom { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 20px; border-top: 1px solid color-mix(in srgb, var(--ivory) 16%, transparent); font-size: 13px; color: var(--on-dark-soft); }
+.footer-bottom { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding-top: 22px; border-top: 1px solid color-mix(in srgb, var(--ivory) 16%, transparent); font-size: 13px; color: var(--on-dark-soft); }
+.footer-bottom a { transition: color .2s; }
+.footer-bottom a:hover { color: var(--ivory); text-decoration: underline; text-underline-offset: 4px; }
+.footer-credit { flex-basis: 100%; margin-top: 10px; text-align: center; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: color-mix(in srgb, var(--on-dark-soft) 80%, transparent); }
+.footer-credit em { margin-left: 4px; font-family: var(--font-display), serif; font-size: 15px; font-style: normal; letter-spacing: .02em; text-transform: none; color: var(--gold); }
+.mp-foot-copy { position: relative; z-index: 1; display: grid; gap: 4px; padding-top: 18px; border-top: 1px solid color-mix(in srgb, var(--ivory) 16%, transparent); width: min(100%, 420px); font-size: 13px; text-align: center; color: var(--on-dark-soft); }
+.mp-foot-copy .footer-credit { margin-top: 6px; }
+@media (max-width: 719px) { .footer-bottom { justify-content: center; text-align: center; } }
 .footer .botanical { right: -30px; top: 60px; width: 220px; color: var(--gold); opacity: .16; }
 @media (min-width: 900px) {
   .footer-top { grid-template-columns: 1.6fr 1fr 1fr 1fr; }
